@@ -73,6 +73,13 @@ Alex Herrero Pons\\
 % Comparación entre los resultados obtenidos con Hill Climbing y Simulated Annealing (no olvidéis explicar cómo habéis ajustado los parámetros para este último algoritmo).
 % Respuestas razonadas a las preguntas del enunciado.
 
+% Descripción del problema detallada
+
+
+
+\section{Descripción del problema}
+El problema consiste en un grupo de servidores que forman un sistema de ficheros(estos servidores contienen ficheros que pueden contener otros servidores, por lo que cuando un usuario haga una petición más de un servidor le podrá servir ese fichero pero tardaran tiempos distintos). En este sistema de ficheros hay uno de los servidores que se encarga de distribuir la peticiones realizadas por los usuarios.
+
 \section{Implementación del estado}
 Para lograr el estado inicial con el cuál hemos ejecutado los experimentos hicimos distintas versiones del estado inicial hasta que nos quedamos con la que creíamos que era mejor.
 
@@ -101,7 +108,8 @@ Esta versión final, nos proporciona el menor tiempo de ejecución de todas las 
 
 \section{Operadores que hemos elegido}
 
-\section{Estrategias para hallar la solución inicial}
+\section{Estrategias para hallar la solución inicial}%
+\label{sec:estrat_sol}
 
 \section{Funciones heurísticas}
 
@@ -110,6 +118,16 @@ Esta versión final, nos proporciona el menor tiempo de ejecución de todas las 
 \subsection{Influencia de los operadores}
 
 \subsection{Influencia de la solución inicial}
+
+Tal como se ha comentado en la sección~\ref{sec:estrat_sol}, implementamos 2 versiones distintas
+para generar la solución inicial. Una que cogía el primer servidor de la lista de servidores que daban ficheros
+para cada petición y otra que buscaba entre los servidores que tenían el fichero, el que tenía mínimo
+tiempo de transmisión para el usuario de la petición.
+
+La primera versión tenía un coste computacional mínimo ya que solo se accedía al primer elemento del
+conjunto retornado por \texttt{DistFS.Server.fileLocations(fileID)}. La otra versión tenia que recorrer
+todo el conjunto para encontrar el servidor con tiempo de transmisión mínimo, lo que equivale a un coste
+lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
 \begin{table}[H]
     \caption{Resultados del experimento 2}%
