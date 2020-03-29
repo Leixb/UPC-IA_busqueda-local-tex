@@ -74,6 +74,30 @@ Alex Herrero Pons\\
 % Respuestas razonadas a las preguntas del enunciado.
 
 \section{Implementación del estado}
+Para lograr el estado inicial con el cuál hemos ejecutado los experimentos hicimos distintas versiones del estado inicial hasta que nos quedamos con la que creíamos que era mejor.
+
+\textbf{La primera  versión de la implementación} planteada consistía en lo siguiente, la estructura de datos que hicimos era un array en el cual los índices del array representaban los ids de las peticiones y el contenido de este representaba el servidor con el cual iba a ser servida esa petición, es decir para cada petición en el array guardábamos el servidor que iba a responder esa petición. Los pros y contras que encontramos en esta implementación fueron.
+
+\textbf{Pros:}
+
+-Eficiente en memoria debido a los pocos datos que se almacenan en esta.
+
+\textbf{Contras:}
+
+-El cálculo de las heurísticas es muy lento, ya que al únicamente utilizar esa estructura de datos muchos datos son calculados de manera repetida.
+
+\textbf{La segunda versión de la implementación} que hicimos consistía en mejorar la primera y las mejoras que añadimos eran añadir otro array. En el cual los índices representaban también los ids de las peticiones, y el contenido de las posiciones del array representaba el tiempo que tarda en servirse dicha petición. Aparte de hacer esta mejora añadimos una variable de tipo entero la cual guardábamos el tiempo total que tardaban en servirse las peticiones.
+
+Las diferencias obtenidas en esta implementación respecto a la  anterior en cuanto al cálculo de las heurísticas  y la eficiencia en la memoria utilizada. Son que el cálculo de las funciones heurísticas tardaba mucho menos que en la primera versión, debido a que hora guardamos variables que antes no guardábamos las cuales nos facilitan el cálculo de las funciones heurísticas, en cuanto a la eficiencia en la memoria esta sigue siendo eficiente pero menos que antes.
+
+\textbf{La última versión de la implementación} que realizamos se trataba de una mejora sobre la versión anterior y lo que hicimos fue añadir un hashmap de dos enteros, en este lo que guardamos es el servidor y el tiempo que tarda en servir todas las peticiones que han sido enviadas a ese servidor, es decir guarda el id del servidor y el tiempo en el que sirve todas las peticiones que tiene que servir.
+
+Esta versión final, nos proporciona el menor tiempo de ejecución de todas las versiones anteriores, y teniendo en cuenta que mantiene una eficiencia en memoria aceptable, para el tipo de problemas al que nos enfrentamos creemos que es la mejor opción. 
+
+
+% primero solo guardavamos para cada req el id del server
+% desupes guardamos tambien los tiempos de las req
+% finalmente guardamos los tiempos de las req i de los servidores
 
 \section{Operadores que hemos elegido}
 
