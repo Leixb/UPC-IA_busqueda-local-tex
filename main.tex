@@ -78,12 +78,67 @@ Alex Herrero Pons\\
 
 
 \section{Descripción del problema}
-El problema consiste en un grupo de servidores que forman un sistema de ficheros(estos servidores contienen ficheros que pueden contener otros servidores, por lo que cuando un usuario haga una petición más de un servidor le podrá servir ese fichero pero tardaran tiempos distintos). En este sistema de ficheros hay uno de los servidores que se encarga de distribuir la peticiones realizadas por los usuarios.
+
+%Primeramente vamos a describir
+
+\subsection{Elementos del problema}
+
+Los elementos del problema que consisten en un conjunto de servidores y usuarios distribuidos de manera geográfica. Cada
+uno de estos servidores tiene a su vez un conjunto de ficheros. Cada fichero esta identificado por un identificador
+único y varios servidores pueden tener copias de un mismo fichero (replicaciones) pero no necesariamente todos
+los servidores tienen todos los ficheros. Cuando un usuario hace una petición (de un fichero)
+un servidor central que se encarga de distribuir las peticiones realizadas por los usuarios. Este servidor tiene información
+sobre el contenido de cada uno de los servidores e indica al usuario a que
+servidor acceder para obtener el fichero que ha pedido. El servidor que gestiona las peticiones sabe también el tiempo
+de transmisión de cada uno de los servidores a cada usuario. Al igual que los ficheros, los servidores, los usuarios y
+las peticiones que estos realizan se identifican mediante IDs.
+
+\subsection{Notas importantes}
+
+Los ficheros son servidos de manera secuencial y los tiempos que se tarda en servir una petición no pueden superar a los 5000ms ni bajar de los 100ms. Un usuario puede hacer una o múltiples peticiones de distintos ficheros y un fichero puede ser pedido muchas veces por distintos usuarios.
+
+\subsection{OBJETIVO DEL PROBLEMA}
+
+El objetivo del problema es asignar para cada petición realizada el servidor que servirá el archivo al usuario.
+Debemos tener en cuenta que se considera una mejor solución aquella que tiene un menor tiempo de transmisión total y aquella que tiene las cargas de los servidores distribuidas de manera equilibrada. Ya que si únicamente tuvieras en cuenta que fuera el menor tiempo de transmisión total posible las cargas de los servidores no serian equilibradas cosa que no nos interesa.
+
+Así pues, una solución del problema es una asignación para cada petición a un servidor. Debido a que queremos encontrar
+una solución que minimiza el tiempo de carga de los servidores y equilibre el trabajo de estos se trata de un problema
+de optimización.
+
+\subsection{Variables}
+
+% numero de estados: prop to ~ NREQ*USERS*NREP (TODO: comentar esto en algun sitio)
+
+%nrep/nserv <= 0.5
+
+Las variables que afectan al problema y a las que nos referiremos en el resto de la práctica son las siguientes:
+
+\begin{enumerate}
+    \item \texttt{USERS}: número de usuarios.
+    \item \texttt{NSERV}: número de servidores.
+    \item \texttt{REQUESTS}: máximo numero de peticiones por usuario.
+    \item \texttt{NREP}: número de replicaciones mínimo de cada fichero.
+\end{enumerate}
+
+Tal como hemos dicho en la sección previa, una solución es una asignación de cada petición a un servidor. Considerando
+esto y con las variables del problema que hemos definido tenemos un espacio de soluciones de:
+\begin{align}
+\texttt{REQUESTS*USERS*REPLICACIONES} \\
+\texttt{NREP} \leq \texttt{REPLICACIONES} \leq \texttt{NSERV}
+\end{align}
+
+El espacio de soluciones es por lo tanto muy grande para valores relativamente pequeños de usuarios, peticiones y
+servidores, por lo que una búsqueda exhaustiva no seria eficiente. Dada una solución válida,
+podemos explorar soluciones vecinas cambiando uno de los servidores de una de las peticiones. 
 
 \section{Implementación del estado}
+
 Para lograr el estado inicial con el cuál hemos ejecutado los experimentos hicimos distintas versiones del estado inicial hasta que nos quedamos con la que creíamos que era mejor.
 
-\textbf{La primera  versión de la implementación} planteada consistía en lo siguiente, la estructura de datos que hicimos era un array en el cual los índices del array representaban los ids de las peticiones y el contenido de este representaba el servidor con el cual iba a ser servida esa petición, es decir para cada petición en el array guardábamos el servidor que iba a responder esa petición. Los pros y contras que encontramos en esta implementación fueron.
+\subsection{Primera versión}
+
+La primera versión de la implementación planteada consistía en lo siguiente, la estructura de datos que hicimos era un array en el cual los índices del array representaban los ids de las peticiones y el contenido de este representaba el servidor con el cual iba a ser servida esa petición, es decir para cada petición en el array guardábamos el servidor que iba a responder esa petición. Los pros y contras que encontramos en esta implementación fueron.
 
 \textbf{Pros:}
 
@@ -93,11 +148,13 @@ Para lograr el estado inicial con el cuál hemos ejecutado los experimentos hici
 
 -El cálculo de las heurísticas es muy lento, ya que al únicamente utilizar esa estructura de datos muchos datos son calculados de manera repetida.
 
-\textbf{La segunda versión de la implementación} que hicimos consistía en mejorar la primera y las mejoras que añadimos eran añadir otro array. En el cual los índices representaban también los ids de las peticiones, y el contenido de las posiciones del array representaba el tiempo que tarda en servirse dicha petición. Aparte de hacer esta mejora añadimos una variable de tipo entero la cual guardábamos el tiempo total que tardaban en servirse las peticiones.
+\subsection{Segunda versión}
+La segunda versión de la implementación que hicimos consistía en mejorar la primera y las mejoras que añadimos eran añadir otro array. En el cual los índices representaban también los ids de las peticiones, y el contenido de las posiciones del array representaba el tiempo que tarda en servirse dicha petición. Aparte de hacer esta mejora añadimos una variable de tipo entero la cual guardábamos el tiempo total que tardaban en servirse las peticiones.
 
 Las diferencias obtenidas en esta implementación respecto a la  anterior en cuanto al cálculo de las heurísticas  y la eficiencia en la memoria utilizada. Son que el cálculo de las funciones heurísticas tardaba mucho menos que en la primera versión, debido a que hora guardamos variables que antes no guardábamos las cuales nos facilitan el cálculo de las funciones heurísticas, en cuanto a la eficiencia en la memoria esta sigue siendo eficiente pero menos que antes.
 
-\textbf{La última versión de la implementación} que realizamos se trataba de una mejora sobre la versión anterior y lo que hicimos fue añadir un hashmap de dos enteros, en este lo que guardamos es el servidor y el tiempo que tarda en servir todas las peticiones que han sido enviadas a ese servidor, es decir guarda el id del servidor y el tiempo en el que sirve todas las peticiones que tiene que servir.
+\subsection{Versión definitiva}
+La última versión de la implementación que realizamos se trataba de una mejora sobre la versión anterior y lo que hicimos fue añadir un hashmap de dos enteros, en este lo que guardamos es el servidor y el tiempo que tarda en servir todas las peticiones que han sido enviadas a ese servidor, es decir guarda el id del servidor y el tiempo en el que sirve todas las peticiones que tiene que servir.
 
 Esta versión final, nos proporciona el menor tiempo de ejecución de todas las versiones anteriores, y teniendo en cuenta que mantiene una eficiencia en memoria aceptable, para el tipo de problemas al que nos enfrentamos creemos que es la mejor opción. 
 
@@ -111,7 +168,40 @@ Esta versión final, nos proporciona el menor tiempo de ejecución de todas las 
 \section{Estrategias para hallar la solución inicial}%
 \label{sec:estrat_sol}
 
+Implementamos dos estrategias para hallar la solución inicial, una muy naïve que cogía el primer servidor
+de la lista de servidores que tenia el fichero para cada petición y otra greedy que cogía para cada petición
+el servidor que tenía menor tiempo de transmisión al usuario. La naïve tenía muchos problemas, el principal
+que al seleccionar siempre el primer servidor de la lista de servidores que tenían el fichero, la carga de
+trabajo se distribuía siempre en los mismos servidores para cada fichero.
+
 \section{Funciones heurísticas}
+
+Implementamos dos funciones heuriticas tal y como pedía el enunciado. La primera minimiza el tiempo de transmisión
+de los ficheros para el servidor que necesita mas tiempo para transmitir sus peticiones. La segunda minimiza
+el tiempo total de transmisión de los ficheros pero con la restricción de que los tiempos de transmisión de los servidores
+han de ser lo más similares possibles entre ellos
+
+\subsection{Primera heurística}
+
+Para la primera heurística simplemente debemos computar el tiempo de transmisión de los ficheros de cada servidor y hallar
+el máximo. En nuestra primera versión del estado esto suponía recorrer todas las peticiones y calcular para cada una de
+ellas el tiempo de transmisión del servidor al usuario y sumar-lo al tiempo de cada servidor. Después recorríamos los tiempos
+de los servidores y encontrábamos el máximo. Este método era lineal en el número de peticiones y de servidores y se tenia
+que computar para cada rama de cada estado por el que pasábamos, era por lo tanto muy poco eficiente.
+
+Con la versión definitiva del estado al tener un Map con el tiempo de cada servidor nos ahorramos el paso de
+recorrer y computar el tiempo de todas las peticiones y solo tenemos que encontrar el máximo entre los servidores, 
+esta operación es lineal en el número de servidores y aunque no lo parezca es mucho más eficiente que la primera
+implementación ya que el número de servidores es mucho menor al número de peticiones y no tenemos que hacer
+llamadas a las funciones de \texttt{DistFS}.
+
+\subsection{Segunda heurística}
+
+La segunda heurística es más compleja ya que se tienen que considerar dos factores: la minimización del tiempo total
+de transmisión y el equilibrio de cargas entre servidores.
+
+Nos decidimos por calcular el tiempo total de transmisión y multiplicar-lo por la desviación estándar de los tiempos
+de transmisión de cada servidor.
 
 \section{Experimentos}
 
@@ -129,6 +219,22 @@ conjunto retornado por \texttt{DistFS.Server.fileLocations(fileID)}. La otra ver
 todo el conjunto para encontrar el servidor con tiempo de transmisión mínimo, lo que equivale a un coste
 lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
+A pesar de que la segunda versión del generador de estado inicial es mucho más costoso, esta limitado
+por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV} <0.5$), por lo que el coste es negligible
+y el tener un mejor estado inicial nos permite llegar a un máximo local con menos iteraciones y que
+los máximos locales estén más cerca de un máximo local.
+
+Tal como se especifica en el enunciado de la práctica usamos los mismos parámetros que en el experimento
+1 y repetimos el experimento 10 veces en el mismo ordenador para minimizar los efectos externos que
+pueden afectar a la solución.
+
+Los resultados obtenidos se muestran en la tabla~\ref{tab:ex2}, en ella
+podemos apreciar claramente como el segundo generador (GEN 1) no solo es significativamente más rápido
+que el de elegir el primer servidor que se encuentra sino que también llega a un máximo local con
+una heurística menor y un tiempo total de transmisión también menor.
+Dados los resultados de este experimento decidimos usar el segundo generador para el resto ya que es
+mejor en todos los ámbitos analizados.
+
 \begin{table}[H]
     \caption{Resultados del experimento 2}%
     \label{tab:ex2}
@@ -141,7 +247,28 @@ lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
 
+En estos experimentos estudiamos la evolución del coste de la búsqueda en función del tamaño del
+problema. Para ello consideramos 2 parámetros: el número de usuarios que piden ficheros y el número
+de servidores.
+
+El número de peticiones es como máximo el número de usuarios multiplicado por el número máximo de peticiones
+por usuario. Dado que el estado es una asignación de petición a servidor, el número de estados posibles
+es el número de de peticiones por el número de replicaciones de cada fichero:
+
+\begin{align}\label{eq:estados}
+ESTADOS \approx USERS\cdot REQUESTS \cdot REPLICACIONES \\
+NREP \leq REPLICACIONES \leq SERVIDORES
+\end{align}
+
+Por lo tanto, el número de estados crece proporcionalmente al número de usuarios, pero no se ve afectado por
+el número de servidores ya que un fichero solo puede estar 
+
+
+
 \subsubsection{Número de usuarios que piden ficheros}
+
+El número de estados del problema es 
+
 
 \begin{table}[H]
     \caption{Resultados del experimento 4 (Usuarios)}%
