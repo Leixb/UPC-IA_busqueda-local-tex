@@ -315,7 +315,9 @@ Para cada combinación de parámetros hemos realizado 10 ejecuciones del program
 
 Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms notablemente menor que el de Hill Climbing (559269 ms).
 
-Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. 
+Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. Observando la gráfica~\ref{fig:heu_steps-1000000-10000-10000-0.01} y comparándola con la de Hill Climbing (figura~\ref{fig:heu_steps-HC} vimos que con los parámetros antes mencionados se obtenía un valor de \emph{heuM} mayor (18261 y  11758 respectivamente).
+
+Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:heu_steps-1000000-10000-10-0.001}). Con valores de TTT y \emph{heuM} iguales a 568187.7 y 11359 respectivamente.
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
 
@@ -383,7 +385,51 @@ varia mucho a medida que se van incrementando el número de usuarios.
     \label{fig:ex4u}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex4u_time_reg.pdf}
+    \caption{Regresión lineal $T_{ej}$ del experimento 4 (Usuarios)}%
+    \label{fig:ex4u_reg}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex4u_time_reg_2.pdf}
+    \caption{Fit polinómico de orden 2 del experimento 4 (Usuarios)}%
+    \label{fig:ex4u_reg_poly}
+\end{figure}
+
+En las figuras~\ref{fig:ex4u_reg} y \ref{fig:ex4u_reg_poly} podemos ver los resultados de una regresión lineal
+sobre los datos obtenidos en el experimento 4 y un \emph{fit} polinómico de grado 2. Se puede observar que la
+regresión lineal no modela los datos obtenidos y el valor de $R^2=0.54$ también lo indica. El fit polinómico
+se ajusta mejor a los datos aunque los valores residuales para los valores de usuarios entre 100 y 500 son
+bastante significativos.
+
 \subsubsection{Número de servidores (Manteniendo el número de replicaciones)}
+
+\begin{table}[H]
+    \caption{Parametros experimento 4 (Servidores)}%
+    \label{tab:ex4s_par}
+    \begin{center}
+    \begin{tabular}{lr}
+    \toprule
+    Parámetro & valor \\
+    \midrule
+    USERS & 200 \\
+    NSERV & $50 \to 1000 \quad (+50)$ \\
+    NREP & 5 \\
+    REQUESTS & 5\\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+\end{table}
+
+Realizamos los experimentos de modo análogo al experimento anterior pero variando el número
+de servidores desde 50 hasta 1000 en incrementos de 50, los parámetros se muestran en la
+tabla~\ref{tab:ex4s_par}. Se realizaron 100 repeticiones para
+cada valor del número de servidores, cada uno con una semilla distinta.
+Se midió el tiempo de ejecución y se calculó la media
+y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s}:
 
 \begin{table}[H]
     \caption{Resultados del experimento 4 (Servidores)}%
