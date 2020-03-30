@@ -17,11 +17,10 @@ Marzo 2020
 
 % MARIA TERESA ABAD: <mabad@cs.upc.edu>
 
+\newtheorem{hyp}{Hipótesis}[section]
+\newtheorem*{hyp*}{Hipótesis}
 
 \begin{document} 
-
-\newtheorem{hyp}{Hipótesis}[section]
-\newtheorem*{hyp*}{Hipótesis}[section]
 
 
 \thispagestyle{empty}
@@ -230,13 +229,18 @@ de transmisión y el equilibrio de cargas entre servidores.
 Nos decidimos por calcular el tiempo total de transmisión y multiplicar-lo por la desviación estándar de los tiempos
 de transmisión de cada servidor.
 
+\pagebreak
 \section{Experimentos}
 
 \subsection{Influencia de los operadores}
 
 Tal como se explica en la sección~\ref{sec:operadores_elegidos}, implementamos dos versiones de operadores,
 una que permitía acceder a todo el espacio de búsqueda y otra más restrictiva que evitaba repetir combinaciones
-de fichero servidor. Usamos los parametros que se muestran en la tabla~\ref{tab:ex1}:
+de fichero servidor.
+
+La tabla~\ref{tab:ex1} muestra un resumen del experimento, con los valores que usamos y los resultados obtenidos.
+Decidimos incluir también el experimento 2 en ya que como se puede observar en la tabla la solución inicial
+influya también sobre la eficacia del operador. Se realizaron 100 repeticiones para cada caso.
 
 \begin{table}[H]
     \caption{Parametros y resultados del experimento 1}%
@@ -257,21 +261,44 @@ de fichero servidor. Usamos los parametros que se muestran en la tabla~\ref{tab:
     \toprule
     Operador & Generador & Heurística \\
     \midrule
-    \multirow{2}{*}{1} & naïve &  91063\\
-    {} & greedy & 11758 \\
+    \multirow{2}{*}{1} & naïve &  73574\\
+    {} & greedy & \textbf{12274} \\
     \addlinespace[0.5em]
-    \multirow{2}{*}{2} & naïve &  49069\\
-    {} & greedy & 11947 \\
+    \multirow{2}{*}{2} & naïve &  65460\\
+    {} & greedy & 12383 \\
     \bottomrule
     \end{tabular}
     \end{center}
 \end{table}
+\vspace{-1em}
 
-%TODO: esto tiene que ser con seed random
+El mejor resultado lo obtuvimos con el primer operador y la heurística greedy. Con el segundo operador
+obtuvimos mejores resultados que con el primero si se usaba la heurística naïve como se puede ver en la
+tabla.
+
+En las tablas~\ref{tab:ex1a} y \ref{tab:ex1b} se puede ver en detalle los resultados de los experimentos\footnote{La tabla~\ref{tab:ex1a} se corresponde a la tabla~\ref{tab:ex2} del segundo experimento}. Al contrario
+de lo que creíamos inicialmente, el tiempo de ejecución entre los dos operadores es muy similar. El resto
+de datos también son muy cercanos entre sí, por lo que consideramos que no era necesario el segundo operador
+ya que no daba mejores resultados ni en tiempo de ejecución ni en calidad de la solución, y además limitaba
+el espacio de búsqueda.
+
+\begin{table}[H]
+    \caption{Resultados del experimento 1 con el primer operador}%
+    \label{tab:ex1a}
+    \begin{center}
+    \input{include/tables/ex2_n}
+    \end{center}
+%\end{table}
+%\begin{table}[H]
+    \caption{Resultados del experimento 1 con el segundo operador}%
+    \label{tab:ex1b}
+    \begin{center}
+    \input{include/tables/ex2n}
+    \end{center}
+\end{table}
+
 
 \subsection{Influencia de la solución inicial}
-
-%TODO: esto tiene que ser con seed random
 
 Tal como se ha comentado en la sección~\ref{sec:estrat_sol}, implementamos 2 versiones distintas
 para generar la solución inicial. Una que cogía el primer servidor de la lista de servidores que daban ficheros
@@ -283,10 +310,11 @@ conjunto retornado por \texttt{DistFS.Server.fileLocations(fileID)}. La otra ver
 todo el conjunto para encontrar el servidor con tiempo de transmisión mínimo, lo que equivale a un coste
 lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
+\begin{hyp*}
 A pesar de que la segunda versión del generador de estado inicial es mucho más costoso, esta limitado
 por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV} <0.5$), por lo que el coste es negligible
-y el tener un mejor estado inicial nos permite llegar a un máximo local con menos iteraciones y que
-los máximos locales estén más cerca de un máximo local.
+y el tener un mejor estado inicial nos permite llegar a un máximo local más óptimo.
+\end{hyp*}
 
 Tal como se especifica en el enunciado de la práctica usamos los mismos parámetros que en el experimento
 1 y repetimos el experimento 100 veces en el mismo ordenador para minimizar los efectos externos que
@@ -304,9 +332,11 @@ Los resultados obtenidos se muestran en la tabla~\ref{tab:ex2}, en ella
 podemos apreciar claramente como el generador greedy no solo es significativamente más rápido
 que el de elegir el primer servidor que se encuentra sino que también llega a un máximo local con
 una heurística menor y un tiempo total de transmisión (TTT) también menor (incluso la desviación
-estándar es menor en un orden de magnitud).
-Dados los resultados de este experimento decidimos usar el segundo generador para el resto ya que es
+estándar es menor en un orden de magnitud). Se cumple nuestra hipótesis inicial y
+dados los resultados de este experimento decidimos usar el segundo generador para el resto ya que es
 mejor en todos los ámbitos analizados.
+
+\pagebreak
 
 \subsection{Parámetros para el simulated annealing}
 
@@ -318,29 +348,21 @@ Para asegurarnos que la búsqueda llega a converger hemos establecido el número
 
 La mayor dificultad para ajustarlos es que la única indicación que se tiene son los resultados obtenidos experimentalmente, eso obliga hacer pruebas exhaustivas para ver como se comporta el problema.
 
-%TODO: esto se sale del margen, igual un begin{align*} mejor?
-En nuestro caso probamos los valores de $stiter\footnote{Iteraciones por cada cambio de temperatura}=\{100,1000,10000\}$, $k=\{10,100,1000,10000\}$ y $\lambda=\{0.01,0.001,0.0001\}$. %como puedo hacer para que no sean todo ',' y se entienda más?.
-Con estos valores esperábamos obtener los mejores resultados con $stiter=10000$, $k=10000$ y $\lambda=0.0001$ aunque preveíamos no ver mucha diferencia entre los distintos valores de \emph{stiter}.
+En nuestro caso probamos los siguientes valores:
+\begin{align*}
+stiter\footnote{Iteraciones por cada cambio de temperatura}&=\{100,\,1000,\,10000\},\\
+k&=\{10,\,100,\,1000,\,10000\},\\
+\lambda&=\{0.01;\,0.001;\,0.0001\}. %asi? perf
+\end{align*}
+Para estos valores esperábamos obtener los mejores resultados con $stiter=10000$, $k=10000$ y $\lambda=0.0001$ aunque preveíamos no ver mucha diferencia entre los distintos valores de \emph{stiter}.
 
-Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:ex3_histSA}. %TODO: importar histograma.
+Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:ex3_histSA}.
 
 \begin{figure}[H]
     \centering
-    %\includegraphics{include/plots/ex3_histSA.pdf}
-    \includegraphics[width=0.8\textwidth]{example-image-a}%cuantas inches le le pongo?
-    % pon como las mias o un poco mas anchas %
-     %vale esto para las de linea perf, pero para el histograma que son 3 juntos quedará enenao.
-     % pon un poco mas grande si quieres para el hist, pon 6  o 6.5 en vez de 5 i 4 en vez de 3.7
-     % lo importante (relativamente pork tampoco queremos perf) es k al hacer el includegrafics no hagamos un resize
-     % pork entonces te queda las letras de tamanos distintos en los graficos i es feo.
-     % perf. si queda muy peque ya veremos.
-     % sisi, es quedtion de prueba i error okk
-     %rc('figure', figsize=[5.0, 3.7])
-     % yo tengo esto
-    \caption{Tiempo de transmisión total para los distintos parámetros.\\ \centerline{(\emph{stiter} = 100 1000 10000)}} %No sé como poner esto!! Así está ok? seh, tampoco hay que tenerlo todo perfect
-    % esta mierda da un error muy raro geez
-    % yaya pero luego sale bien... :)
-    \label{fig:ex3_histSA} %nice pues mejor voy tirando y si hay algo mal al final ya se verá
+    \includegraphics{include/plots/ex3_histSA.pdf}
+    \caption{Tiempo de transmisión total para los distintos parámetros.\\ \centerline{($stiter$ = 100 1000 10000)}}
+    \label{fig:ex3_histSA}
 \end{figure}
 
 Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms notablemente menor que el de Hill Climbing (559269 ms). 
@@ -351,32 +373,31 @@ También cabe destacar que por lo general no hay mucha diferencias entre los dis
 
 \begin{figure}[H]
     \centering
-    %\includegraphics{include/plots/ex3_heu_steps-HC.pdf}
-    \includegraphics[width=0.8\textwidth]{example-image-a}
+    \includegraphics{include/plots/ex3_heu_steps-HC.pdf}
     \caption{Evolución de la heurística (HC)}
     \label{fig:ex3_heu_steps-HC} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    %\includegraphics{include/plots/ex3_heu_steps-10000-10000-0.01.pdf}
-    \includegraphics[width=0.8\textwidth]{example-image-a}
+    \includegraphics{include/plots/ex3_heu_steps-10000-10000-0.01.pdf}
     \caption{Evolución de la heurística (SA/ $stiter=10000$, $k=10000$ y $\lambda=0.01$)}
     \label{fig:ex3_heu_steps-10000-10000-0.01} 
 \end{figure}
 
 Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. Observando la gráfica~\ref{fig:ex3_heu_steps-10000-10000-0.01} y comparándola con la de Hill Climbing (figura~\ref{fig:ex3_heu_steps-HC} vimos que con los parámetros antes mencionados se obtenía un valor de \emph{heuM} mayor (18261 y  11758 respectivamente).
 
-Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7 y 11359 respectivamente.
+Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7 ms y 11359 respectivamente. % heuM en que unidades está??
 
 \begin{figure}[H]
     \centering
-    %\includegraphics{include/plots/ex3_heu_steps-1000000-10000-10-0.001.pdf}
-    \includegraphics[width=0.8\textwidth]{example-image-a}
+    \includegraphics{include/plots/ex3_heu_steps-1000000-10000-10-0.001.pdf}
     \caption{Evolución de la heurística (SA/ $stiter=10000$, $k=10$ y $\lambda=0.001$)}
     \label{fig:ex3_heu_steps-1000000-10000-10-0.001} 
 \end{figure}
-% TODO: importar graficos.
+
+\pagebreak
+
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
 
@@ -513,8 +534,10 @@ y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s
 \end{figure}
 
 \subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Hill Climbing)}
+%TODO:
 
 \subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Simulated Annealing)}
+%TODO:
 
 \subsection{Influencia del número de replicaciones de los ficheros}
 
@@ -568,12 +591,31 @@ de ejecución incrementa linealmente con el número de replicaciones y el tiempo
     \label{fig:ex7means}
 \end{figure}
 
+El boxplot de la figura~\ref{fig:ex7time} nos permite analizar con más detalle los resultados obtenidos.
+Vemos que hay mucha variación en el tiempo de ejecución con outliers que llegan hasta 3 veces más de la media.
+
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex7_time_bplot.pdf}
     \caption{Boxplot del tiempo de ejecución con la primera heurística}%
     \label{fig:ex7time}
 \end{figure}
+
+La figura~\ref{fig:ex7reg} muestra la regresión lineal sobre los datos obtenidos para el tiempo de ejecución con
+la primera heurística. A pesar de lo que parecía a priori, la regresión tiene un valor de $R^2$ muy bajo
+que nos indica que no es un buen modelo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex7_time_reg.pdf}
+    \caption{Regresión del tiempo de ejecución con la primera heurística}%
+    \label{fig:ex7reg}
+\end{figure}
+
+El boxplot del tiempo total de transmisión que se muestra en la figura~\ref{fig:ex7ttt} nos indica
+que el número de replicaciones de un fichero y el tiempo total de transmisión de la solución obtenida
+sigue una relación de proporcionalidad inversa. A diferencia de con el tiempo de ejecución el tiempo total
+obtenido parece muy consistente con poca variación entre las 100 repeticiones realizadas.
 
 \begin{figure}[H]
     \centering
@@ -614,8 +656,8 @@ de ejecución incrementa linealmente con el número de replicaciones y el tiempo
     \label{fig:ex7ttt_total}
 \end{figure}
 
-\subsection{Conclusión de los experimentos}
-    
+\section{Conclusión}
+%TODO:
     
     
 \end{document}
