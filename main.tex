@@ -82,13 +82,9 @@ Alex Herrero Pons\\
 % Comparación entre los resultados obtenidos con Hill Climbing y Simulated Annealing (no olvidéis explicar cómo habéis ajustado los parámetros para este último algoritmo).
 % Respuestas razonadas a las preguntas del enunciado.
 
-% Descripción del problema detallada
-
 
 
 \section{Descripción del problema}
-
-%Primeramente vamos a describir
 
 \subsection{Elementos del problema}
 
@@ -118,10 +114,6 @@ de optimización.
 \pagebreak
 \subsection{Variables}%
 \label{ssec:variables}
-
-% numero de estados: prop to ~ NREQ*USERS*NREP (TODO: comentar esto en algun sitio)
-
-%nrep/nserv <= 0.5
 
 Las variables que afectan al problema y a las que nos referiremos en el resto de la práctica son las siguientes:
 
@@ -179,10 +171,6 @@ mucho más rápido y el tiempo de ejecución se reducía considerablemente.
 Esta versión final, nos proporciona el menor tiempo de ejecución de todas las versiones anteriores, y teniendo en cuenta que mantiene una eficiencia en memoria aceptable, para el tipo de problemas al que nos enfrentamos creemos que es la mejor opción. 
 
 
-% primero solo guardavamos para cada req el id del server
-% desupes guardamos tambien los tiempos de las req
-% finalmente guardamos los tiempos de las req i de los servidores
-
 \section{Operadores que hemos elegido}%
 \label{sec:operadores_elegidos}
 
@@ -194,7 +182,7 @@ La segunda operadora reduce mucho la ramificación respecto a la primera y a med
 reduciendo aún más. Por consiguiente debería ser más rápida que la primera operación, pero es muy restrictiva y seguramente
 no permita llegar a estados de solución tan buenos como los alcanzables por la primera operación.
 
-\section{Estrategias para hallar la solución inicial}%
+\section{Estrategias para hallar la solución inicial}
 \label{sec:estrat_sol}
 
 Implementamos dos estrategias para hallar la solución inicial, una muy naïve que cogía el primer servidor
@@ -381,7 +369,7 @@ Para cada combinación de parámetros hemos realizado 10 ejecuciones del program
     \label{fig:ex3_histSA}
 \end{figure}
 
-Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms notablemente menor que el de Hill Climbing (559269 ms). 
+Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms notablemente menor que el de Hill Climbing (559269ms). 
 
 Este resultado como se puede comprobar concuerda con nuestra hipótesis inicial en los valores de $stiter$ y $k$, pero en el caso de $\lambda$ nos dio un resultado bastante inesperado, del cual extrajimos que valores demasiado pequeños podían dar peores resultados.
 
@@ -403,7 +391,7 @@ También cabe destacar que por lo general no hay mucha diferencias entre los dis
 
 Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. Observando la gráfica~\ref{fig:ex3_heu_steps-10000-10000-0.01} y comparándola con la de Hill Climbing (figura~\ref{fig:ex3_heu_steps-HC} vimos que con los parámetros antes mencionados se obtenía un valor de \emph{heuM} mayor (18261 y  11758 respectivamente).
 
-Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7 ms y 11359 ms respectivamente.
+Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7ms y 11359ms respectivamente.
 
 \begin{figure}[H]
     \centering
@@ -425,7 +413,6 @@ Retomando lo explicado en la sección~\ref{ssec:variables}, el número de estado
 \texttt{REQUESTS*USERS*REPLICACIONES}, donde \texttt{REPLICACIONES} esta delimitado por
 el número mínimo de replicaciones de un fichero y el número de servidores.
 
-%Por lo tanto,
 \begin{hyp*}
 El número de estados crece más rápido al aumentar el número de usuarios que al aumentar
 el número de servidores. Además tener más servidores implica que es más fácil distribuir la carga de modo
@@ -566,7 +553,7 @@ tanto el tiempo total de transmisión como el tiempo de ejecución.
 
 \begin{hyp*}
 La segunda heurística será más rápida y encontrará mejores resultados que la primera.
-\end{hyp*} % no sé que más poner xD (yo lo dejaría así) además he puesto exactamente la misma en el de SA, al ser una hipótesis he supuesto que no pasaba nada, pero idk
+\end{hyp*}
 
 Los parámetros usados son los mismos del experimento 1.
 Se ejecutaron 100 repeticiones usando la primera heurística y 100 más usando la segunda.
@@ -816,11 +803,10 @@ tablas y gráficos correspondientes.
     \label{fig:ex7ttt_total}
 \end{figure}
 
-%\subsubsection{Comparación entre las heurísticas}
 \pagebreak
 \subsection{Comparación de las heurísticas}
 
-Como se ha podido ver en el experimento 7 (seción~\ref{sub:exp7}, 
+Como se ha podido ver en el experimento 7 (sección~\ref{sub:exp7}, 
 a nivel del tiempo de ejecución las dos heurística obtienen resultados similares, aunque la primera
 heurística tiene una desviación estándar mayor (los tiempos tienden a variar más).
 
@@ -837,10 +823,6 @@ la figura~\ref{fig:ex7comp}:
 
 Los resultados de los experimentos 5 y 6 (secciones~\ref{sub:diffHC} y \ref{sub:exp6}) nos muestran que
 la segunda heurística da mejores resultados Usando tanto Hill Climbing como Simulated Annealing.
-
-%    Dados los resultados obtenidos con todos estos experimentos, comparad las dos aproximaciones y
-% comentad las ventajas y desventajas de cada una. ¿Cual de las dos consideráis que es una mejor solución?
-% (comparar tamién los algoritmos)
 
 
 \section{Conclusión}
@@ -886,21 +868,6 @@ La búsqueda de la información del trabajo la hemos repartido de la siguiente m
 
 \subsection{Referencias relevantes:}
 
-%\begin{itemize}
-%
-%\item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}   (Descripción del producto, innovación del producto técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en la empresa)
-%\item \url{https://www.gehealthcare.com/article/magnetic-resonance-imaging-using-ai-a-new-deep-learning-tool}   (Descripción del producto, innovación del producto, técnicas de IA utilizadas, impacto en el usuario o la sociedad)
-%\item \url{https://www.gehealthcare.com/article/how-advanced-applications-and-ai-are-impacting-mri}  (Técnicas de IA utilizadas, impacto en el usuario o la sociedad)
-%\item \url{http://www.gesignapulse.com/signapulse/spring_2019/MobilePagedArticle.action?articleId=1488815&app=false#articleId1488815} (Técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en el usuario o en la empresa)
-%\item \url{http://www.gesignapulse.com/signapulse/spring_2018/MobilePagedArticle.action?articleId=1396203&app=false#articleId1396203} (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-%\item \url{https://www.auntminnie.com/index.aspx?sec=rca&sub=ecr_2019&pag=dis&ItemID=124750}  (técnicas IA utilizadas, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-%\item \url{https://www.dotmed.com/news/story/46576}    (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-%\item \url{http://www.gesignapulse.com/signapulse/autumn_2018/MobilePagedArticle.action?articleId=1444512&app=false#articleId1444512}  (Descripción del producto,innovación del producto,  técnicas de IA utilizadas)
-%\item \url{https://medium.com/stanford-ai-for-healthcare/dont-just-scan-this-deep-learning-techniques-for-mri-52610e9b7a85}   (Descripción del producto, innovación del producto,  técnicas de IA utilizadas, como se han utilizado las técnicas)
-%\item \url{https://www.intel.ai/solutions/gehc-airx/}: Descripción de las diferentes CNNs que se usan.
-%
-%\end{itemize}
-
 \begin{itemize}
 \item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}:
 (Cons. 11/03)
@@ -939,6 +906,4 @@ de los escáneres MRI ni su funcionamiento, por lo que a parte de buscar informa
 tecnología nos hemos tenido que informar también sobre todo el proceso detrás de una sesión de MRI y sus
 complejidades.
 
-% Dificultades que hayáis encontrado a la hora de buscar la información necesaria para el trabajo.
-    
 \end{document}
