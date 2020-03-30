@@ -4,6 +4,7 @@
 \usepackage[bottom]{footmisc}
 
 \usepackage{amsmath}
+\usepackage[justification=centering]{caption}
 
 \title{IA Búsqueda local}
 \author{%
@@ -312,7 +313,7 @@ lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
 \begin{hyp*}
 A pesar de que la segunda versión del generador de estado inicial es mucho más costoso, esta limitado
-por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV} <0.5$), por lo que el coste es negligible
+por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV}$ $<0.5$), por lo que el coste es negligible
 y el tener un mejor estado inicial nos permite llegar a un máximo local más óptimo.
 \end{hyp*}
 
@@ -361,7 +362,7 @@ Para cada combinación de parámetros hemos realizado 10 ejecuciones del program
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex3_histSA.pdf}
-    \caption{Tiempo de transmisión total para los distintos parámetros.\\ \centerline{($stiter$ = 100 1000 10000)}}
+    \caption{Tiempo de transmisión total para los distintos parámetros.\\ ($stiter$ = 100 1000 10000)}
     \label{fig:ex3_histSA}
 \end{figure}
 
@@ -369,7 +370,7 @@ Como se puede observar en la gráfica los mejores resultados los hemos obtenido 
 
 Este resultado como se puede comprobar concuerda con nuestra hipótesis inicial en los valores de $stiter$ y $k$, pero en el caso de $\lambda$ nos dio un resultado bastante inesperado, del cual extrajimos que valores demasiado pequeños podían dar peores resultados.
 
-También cabe destacar que por lo general no hay mucha diferencias entre los distintos valores de \emph{stiter}, pero si nos fijamos de nuevo en la figura~\ref{fig:histSA} se ve como en el caso de $k=10000$ y $\lambda=0.01$ se observa una gran diferencia entre $stiter=100$ y los otros valores.
+También cabe destacar que por lo general no hay mucha diferencias entre los distintos valores de \emph{stiter}, pero si nos fijamos de nuevo en la figura~\ref{fig:ex3_histSA} se ve como en el caso de $k=10000$ y $\lambda=0.01$ se observa una gran diferencia entre $stiter=100$ y los otros valores.
 
 \begin{figure}[H]
     \centering
@@ -543,7 +544,7 @@ y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s
 
 \begin{table}[H]
     \caption{Parámetros experimento 7}%
-    \label{tab:ex4s_par}
+    \label{tab:ex7_par}
     \begin{center}
     \begin{tabular}{lr}
     \toprule
@@ -626,6 +627,9 @@ obtenido parece muy consistente con poca variación entre las 100 repeticiones r
 
 \subsubsection{Segunda heurística}
 
+Los resultados con la segunda heurística son similares a los obtenidos con la primera. A continuación se incluyen las
+tablas y gráficos correspondientes.
+
 \begin{table}[H]
     \centering
     \caption{Resultados del experimento 7 con la segunda heurística}%
@@ -654,6 +658,22 @@ obtenido parece muy consistente con poca variación entre las 100 repeticiones r
     \includegraphics{include/plots/ex7_ttt_bplot_n.pdf}
     \caption{Boxplot del tiempo total de transmisión con la segunda heurística}%
     \label{fig:ex7ttt_total}
+\end{figure}
+
+\subsubsection{Comparación entre las heurísticas}
+
+A nivel del tiempo de ejecución las dos heurística obtienen resultados similares, aunque la primera
+heurística tiene una desviación estándar mayor (los tiempos tienden a variar más).
+
+Donde si se aprecia una diferencia notable es en el tiempo total de transmisión. Los resultados
+con la segunda heurística son consistentemente más bajos que con la primera tal y como se muestra en
+la figura~\ref{fig:ex7comp}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex7_comp.pdf}
+    \caption{Boxplots del tiempo total de transmisión con de las dos heurísticas}%
+    \label{fig:ex7comp}
 \end{figure}
 
 \section{Conclusión}
