@@ -106,7 +106,8 @@ Así pues, una solución del problema es una asignación para cada petición a u
 una solución que minimiza el tiempo de carga de los servidores y equilibre el trabajo de estos se trata de un problema
 de optimización.
 
-\subsection{Variables}
+\subsection{Variables}%
+\label{ssec:variables}
 
 % numero de estados: prop to ~ NREQ*USERS*NREP (TODO: comentar esto en algun sitio)
 
@@ -171,7 +172,16 @@ Esta versión final, nos proporciona el menor tiempo de ejecución de todas las 
 % desupes guardamos tambien los tiempos de las req
 % finalmente guardamos los tiempos de las req i de los servidores
 
-\section{Operadores que hemos elegido}
+\section{Operadores que hemos elegido}%
+\label{sec:operadores_elegidos}
+
+Definimos dos operadores, uno que cambiaba la asignación de uno de los servidores que daba una petición por otro distinto.
+La otra operadora era muy similar, hacia lo mismo pero con la restricción de que solo se podía hacer cambios a servidores
+que no se hubieran probado antes para ese archivo.
+
+La segunda operadora reduce mucho la ramificación respecto a la primera y a medida que se avanza en la búsqueda se va
+reduciendo aún más. Por consiguiente debería ser más rápida que la primera operación, pero es muy restrictiva y seguramente
+no permita llegar a estados de solución tan buenos como los alcanzables por la primera operación.
 
 \section{Estrategias para hallar la solución inicial}%
 \label{sec:estrat_sol}
@@ -215,7 +225,43 @@ de transmisión de cada servidor.
 
 \subsection{Influencia de los operadores}
 
+Tal como se explica en la sección~\ref{sec:operadores_elegidos}, implementamos dos versiones de operadores,
+una que permitía acceder a todo el espacio de búsqueda y otra más restrictiva que evitaba repetir combinaciones
+de fichero servidor. Usamos los parametros que se muestran en la tabla~\ref{tab:ex1}:
+\begin{table}[H]
+    \caption{Parametros y resultados del experimento 1}%
+    \label{tab:ex1}
+    \begin{center}
+    \begin{tabular}{lr}
+    \toprule
+    Parámetro & valor \\
+    \midrule
+    USERS & 200 \\
+    NSERV & 50 \\
+    NREP & 5 \\
+    REQUESTS & 5\\
+    \bottomrule
+    \end{tabular}
+    \hspace{2em}
+    \begin{tabular}{ccr}
+    \toprule
+    Operador & Generador & Heurística \\
+    \midrule
+    \multirow{2}{*}{1} & naïve &  91063\\
+    {} & greedy & 11758 \\
+    \addlinespace[0.5em]
+    \multirow{2}{*}{2} & naïve &  49069\\
+    {} & greedy & 11947 \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+\end{table}
+
+%TODO: esto tiene que ser con seed random
+
 \subsection{Influencia de la solución inicial}
+
+%TODO: esto tiene que ser con seed random
 
 Tal como se ha comentado en la sección~\ref{sec:estrat_sol}, implementamos 2 versiones distintas
 para generar la solución inicial. Una que cogía el primer servidor de la lista de servidores que daban ficheros
@@ -233,32 +279,43 @@ y el tener un mejor estado inicial nos permite llegar a un máximo local con men
 los máximos locales estén más cerca de un máximo local.
 
 Tal como se especifica en el enunciado de la práctica usamos los mismos parámetros que en el experimento
-1 y repetimos el experimento 10 veces en el mismo ordenador para minimizar los efectos externos que
-pueden afectar a la solución.
-
-Los resultados obtenidos se muestran en la tabla~\ref{tab:ex2}, en ella
-podemos apreciar claramente como el segundo generador (GEN 1) no solo es significativamente más rápido
-que el de elegir el primer servidor que se encuentra sino que también llega a un máximo local con
-una heurística menor y un tiempo total de transmisión también menor.
-Dados los resultados de este experimento decidimos usar el segundo generador para el resto ya que es
-mejor en todos los ámbitos analizados.
+1 y repetimos el experimento 100 veces en el mismo ordenador para minimizar los efectos externos que
+pueden afectar al tiempo de ejecución.
 
 \begin{table}[H]
-    \caption{Resultados del experimento 2}%
+    \caption{$T_{ej}$, TTT y heurística obtenidos con los generadores de estado inicial}%
     \label{tab:ex2}
     \begin{center}
     \input{include/tables/ex2}
     \end{center}
 \end{table}
 
-\subsection{Parámetros para el simulated annealing}
-El objetivo de estos experimentos es ajustar los parámetros del Simulated Annealing para conseguir mejores resultados que con Hill Climbing. 
+Los resultados obtenidos se muestran en la tabla~\ref{tab:ex2}, en ella
+podemos apreciar claramente como el generador greedy no solo es significativamente más rápido
+que el de elegir el primer servidor que se encuentra sino que también llega a un máximo local con
+una heurística menor y un tiempo total de transmisión (TTT) también menor (incluso la desviación
+estándar es menor en un orden de magnitud).
+Dados los resultados de este experimento decidimos usar el segundo generador para el resto ya que es
+mejor en todos los ámbitos analizados.
 
-Vamos a hacer el experimento para el mismo escenario que en los experimentos anteriores y utilizando la función heurística, los operadores y la estrategia de generación de la solución inicial escogidos.
+\subsection{Parámetros para el simulated annealing}
+
+El objetivo de este experimento es ajustar los parámetros del Simulated Annealing para conseguir mejores resultados que con Hill Climbing. 
+
+Hicimos el estudio para el mismo escenario que en los experimentos anteriores, utilizando la función heurística, los operadores y la estrategia de generación de la solución inicial escogidos. Con el fin de facilitar la comparación de resultados también establecimos la semilla del generador de números aleatorios 1234.
 
 Para asegurarnos que la búsqueda llega a converger hemos establecido el número de iteraciones a $10^6$.
 
+La mayor dificultad para ajustarlos es que la única indicación que se tiene son los resultados obtenidos experimentalmente, eso obliga hacer pruebas exhaustivas para ver como se comporta el problema.
 
+En nuestro caso probamos los valores de $stiter\footnote{Iteraciones por cada cambio de temperatura}=\{100,1000,10000\}$, $k=\{10,100,1000,10000\}$ y $\lambda=\{0.01,0.001,0.0001\}$. %como puedo hacer para que no sean todo ',' y se entienda más?.
+
+Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:histSA} %TODO: importar histograma.
+
+Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $k=10000$, $\lambda=0.01$ y 
+
+10000	10000	0.0100	488365.8
+1000	10000	0.0100	490648.6
 
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
@@ -267,23 +324,15 @@ En estos experimentos estudiamos la evolución del coste de la búsqueda en func
 problema. Para ello consideramos 2 parámetros: el número de usuarios que piden ficheros y el número
 de servidores.
 
-El número de peticiones es como máximo el número de usuarios multiplicado por el número máximo de peticiones
-por usuario. Dado que el estado es una asignación de petición a servidor, el número de estados posibles
-es el número de de peticiones por el número de replicaciones de cada fichero:
+Retomando lo explicado en la sección~\ref{ssec:variables}, el número de estados del problema es:
+\texttt{REQUESTS*USERS*REPLICACIONES}, donde \texttt{REPLICACIONES} esta delimitado por
+el número mínimo de replicaciones de un fichero y el número de servidores.
 
-\begin{align}\label{eq:estados}
-ESTADOS \approx USERS\cdot REQUESTS \cdot REPLICACIONES \\
-NREP \leq REPLICACIONES \leq SERVIDORES
-\end{align}
-
-Por lo tanto, el número de estados crece proporcionalmente al número de usuarios, pero no se ve afectado por
-el número de servidores ya que un fichero solo puede estar 
-
-
+Por lo tanto, el número de estados crece más rápido al aumentar el número de usuarios que al aumentar
+el número de servidores. Además tener más servidores implica que es más fácil distribuir la carga de modo
+equitativo, por lo que es possible que se llegue más rápidamente a los minímos locales.
 
 \subsubsection{Número de usuarios que piden ficheros}
-
-El número de estados del problema es 
 
 
 \begin{table}[H]

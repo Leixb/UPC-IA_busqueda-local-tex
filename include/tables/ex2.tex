@@ -1,10 +1,13 @@
-\begin{tabular}{lrrrrrrrrr}
+\begin{tabular}{lrrrr}
 \toprule
-{} & \multicolumn{3}{c}{time} & \multicolumn{3}{c}{Tiempo total de transmisión} & \multicolumn{3}{c}{Heuristica} \\
-{} & repeticiones &    media &       std &                repeticiones &      media &  std & repeticiones &    media &  std \\
-GEN &              &          &           &                             &            &      &              &          &      \\
+\multicolumn{1}{c}{\multirow{2}{*}{Generador}} &
+\multicolumn{2}{c}{$T_{ej}$} &
+\multicolumn{1}{c}{\multirow{2}{*}{TTT}} &
+\multicolumn{1}{c}{\multirow{2}{*}{Heuristica}}
+\\
+{} & \multicolumn{1}{c}{media} &       \multicolumn{1}{c}{std} &  \\
 \midrule
-0   &        100.0 &  2.18558 &  0.292221 &                       100.0 &  1563778.0 &  0.0 &        100.0 &  91063.0 &  0.0 \\
-1   &        100.0 &  1.23535 &  0.029933 &                       100.0 &   559269.0 &  0.0 &        100.0 &  11758.0 &  0.0 \\
+naïve    &  2.18558 &  0.292221 &                       1563778  &  91063 \\
+greedy   &  1.23535 &  0.029933 &                       559269  &  11758 \\
 \bottomrule
 \end{tabular}
