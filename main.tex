@@ -97,7 +97,7 @@ las peticiones que estos realizan se identifican mediante IDs.
 
 Los ficheros son servidos de manera secuencial y los tiempos que se tarda en servir una petición no pueden superar a los 5000ms ni bajar de los 100ms. Un usuario puede hacer una o múltiples peticiones de distintos ficheros y un fichero puede ser pedido muchas veces por distintos usuarios.
 
-\subsection{OBJETIVO DEL PROBLEMA}
+\subsection{Objetivo}
 
 El objetivo del problema es asignar para cada petición realizada el servidor que servirá el archivo al usuario.
 Debemos tener en cuenta que se considera una mejor solución aquella que tiene un menor tiempo de transmisión total y aquella que tiene las cargas de los servidores distribuidas de manera equilibrada. Ya que si únicamente tuvieras en cuenta que fuera el menor tiempo de transmisión total posible las cargas de los servidores no serian equilibradas cosa que no nos interesa.
@@ -138,23 +138,31 @@ Para lograr el estado inicial con el cuál hemos ejecutado los experimentos hici
 
 \subsection{Primera versión}
 
-La primera versión de la implementación planteada consistía en lo siguiente, la estructura de datos que hicimos era un array en el cual los índices del array representaban los ids de las peticiones y el contenido de este representaba el servidor con el cual iba a ser servida esa petición, es decir para cada petición en el array guardábamos el servidor que iba a responder esa petición. Los pros y contras que encontramos en esta implementación fueron.
+La primera versión de la implementación planteada era muy simple y consistía guardar un array con los identificadores
+de los servidores que enviarían el fichero de la petición correspondiente al índice del array, es decir para cada
+petición en el array guardábamos el servidor que iba a responder esa petición.
 
-\textbf{Pros:}
-
--Eficiente en memoria debido a los pocos datos que se almacenan en esta.
-
-\textbf{Contras:}
-
--El cálculo de las heurísticas es muy lento, ya que al únicamente utilizar esa estructura de datos muchos datos son calculados de manera repetida.
+Esta versión era eficiente en memoria debido a los pocos datos que se almacenan. Pero al empezar a implementar las heurísticas
+nos percatamos que se tenían que realizar muchos cálculos para obtener los valores de las heurísticas. Esto hacia que la
+ejecución fuera muy lenta y se calculaban muchos datos de forma repetida.
 
 \subsection{Segunda versión}
-La segunda versión de la implementación que hicimos consistía en mejorar la primera y las mejoras que añadimos eran añadir otro array. En el cual los índices representaban también los ids de las peticiones, y el contenido de las posiciones del array representaba el tiempo que tarda en servirse dicha petición. Aparte de hacer esta mejora añadimos una variable de tipo entero la cual guardábamos el tiempo total que tardaban en servirse las peticiones.
+Para evitar la repetición de cálculos al computar las heurísticas de la primera versión decidimos añadir al estado
+dos variables adicionales: una que guardaba el tiempo total de todas las transmisiones asignadas y un array con
+el tiempo de transmisión de cada petición para el servidor asignado en el estado.
 
-Las diferencias obtenidas en esta implementación respecto a la  anterior en cuanto al cálculo de las heurísticas  y la eficiencia en la memoria utilizada. Son que el cálculo de las funciones heurísticas tardaba mucho menos que en la primera versión, debido a que hora guardamos variables que antes no guardábamos las cuales nos facilitan el cálculo de las funciones heurísticas, en cuanto a la eficiencia en la memoria esta sigue siendo eficiente pero menos que antes.
+Con esta implementación, el cálculo de las funciones heurísticas tardaba menos que en la primera versión,
+debido a que hora guardamos variables que antes no guardábamos las cuales nos facilitan el cálculo de las funciones heurísticas.
+Sin embargo la mejora no era muy sustancial ya que seguíamos requiriendo bastantes cálculos que se podían evitar.
+En cuanto a la eficiencia en la memoria esta sigue siendo eficiente pero menos que antes.
 
 \subsection{Versión definitiva}
-La última versión de la implementación que realizamos se trataba de una mejora sobre la versión anterior y lo que hicimos fue añadir un hashmap de dos enteros, en este lo que guardamos es el servidor y el tiempo que tarda en servir todas las peticiones que han sido enviadas a ese servidor, es decir guarda el id del servidor y el tiempo en el que sirve todas las peticiones que tiene que servir.
+
+Finalmente decidimos guardar también el tiempo de transmisión de los ficheros de cada servidor, ya que para la primera
+heurística necesitábamos el tiempo de los servidores, no de las peticiones individualmente.
+Puesto que los IDs de los servidores no estaban delimitados, tuvimos que usar un Map de entero entero donde guardamos para cada ID de servidor
+el tiempo total de transmisión de las peticiones que se le asignaban. De este modo el cálculo de las heurísticas era
+mucho más rápido y el tiempo de ejecución se reducía considerablemente.
 
 Esta versión final, nos proporciona el menor tiempo de ejecución de todas las versiones anteriores, y teniendo en cuenta que mantiene una eficiencia en memoria aceptable, para el tipo de problemas al que nos enfrentamos creemos que es la mejor opción. 
 
@@ -176,10 +184,10 @@ trabajo se distribuía siempre en los mismos servidores para cada fichero.
 
 \section{Funciones heurísticas}
 
-Implementamos dos funciones heuriticas tal y como pedía el enunciado. La primera minimiza el tiempo de transmisión
+Implementamos dos funciones heurísticas tal y como pedía el enunciado. La primera minimiza el tiempo de transmisión
 de los ficheros para el servidor que necesita mas tiempo para transmitir sus peticiones. La segunda minimiza
 el tiempo total de transmisión de los ficheros pero con la restricción de que los tiempos de transmisión de los servidores
-han de ser lo más similares possibles entre ellos
+han de ser lo más similares posibles entre ellos
 
 \subsection{Primera heurística}
 
@@ -244,6 +252,14 @@ mejor en todos los ámbitos analizados.
 \end{table}
 
 \subsection{Parámetros para el simulated annealing}
+El objetivo de estos experimentos es ajustar los parámetros del Simulated Annealing para conseguir mejores resultados que con Hill Climbing. 
+
+Vamos a hacer el experimento para el mismo escenario que en los experimentos anteriores y utilizando la función heurística, los operadores y la estrategia de generación de la solución inicial escogidos.
+
+Para asegurarnos que la búsqueda llega a converger hemos establecido el número de iteraciones a $10^6$.
+
+
+
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
 
