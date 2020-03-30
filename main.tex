@@ -2,7 +2,6 @@
 \input{preamble.tex}
 
 \usepackage[bottom]{footmisc}
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
 \usepackage{amsmath}
 \usepackage[justification=centering]{caption}
@@ -93,7 +92,7 @@ Alex Herrero Pons\\
 
 \subsection{Elementos del problema}
 
-Los elementos del problema que consisten en un conjunto de servidores y usuarios distribuidos de manera geográfica. Cada
+Los elementos del problema consisten en un conjunto de servidores y usuarios distribuidos de manera geográfica. Cada
 uno de estos servidores tiene a su vez un conjunto de ficheros. Cada fichero esta identificado por un identificador
 único y varios servidores pueden tener copias de un mismo fichero (replicaciones) pero no necesariamente todos
 los servidores tienen todos los ficheros. Cuando un usuario hace una petición (de un fichero)
@@ -241,7 +240,7 @@ una que permitía acceder a todo el espacio de búsqueda y otra más restrictiva
 de fichero servidor.
 
 \begin{hyp*}
-
+El operador más restrictivo dará resultados algo peores debido que limita el espacio de búsqueda, pero por este mismo motivo se reducirá en gran cantidad el tiempo de ejecución.
 \end{hyp*}
 
 La tabla~\ref{tab:ex1} muestra un resumen del experimento, con los valores que usamos y los resultados obtenidos.
@@ -249,8 +248,9 @@ Decidimos incluir también el experimento 2 en ya que como se puede observar en 
 influya también sobre la eficacia del operador. Se realizaron 100 repeticiones para cada caso.
 
 \begin{table}[H]
-    \caption{Parametros y resultados del experimento 1}%
+    \caption{Parámetros y resultados del experimento 1}%
     \label{tab:ex1}
+    \vspace{-1em}
     \begin{center}
     \begin{tabular}{lr}
     \toprule
@@ -276,7 +276,7 @@ influya también sobre la eficacia del operador. Se realizaron 100 repeticiones 
     \end{tabular}
     \end{center}
 \end{table}
-\vspace{-1em}
+\vspace{-2em}
 
 El mejor resultado lo obtuvimos con el primer operador y la heurística greedy. Con el segundo operador
 obtuvimos mejores resultados que con el primero si se usaba la heurística naïve como se puede ver en la
@@ -291,13 +291,16 @@ el espacio de búsqueda.
 \begin{table}[H]
     \caption{Resultados del experimento 1 con el primer operador}%
     \label{tab:ex1a}
+\vspace{-1em}
     \begin{center}
     \input{include/tables/ex2_n}
     \end{center}
 %\end{table}
 %\begin{table}[H]
+\vspace{-0.5em}
     \caption{Resultados del experimento 1 con el segundo operador}%
     \label{tab:ex1b}
+\vspace{-1.5em}
     \begin{center}
     \input{include/tables/ex2n}
     \end{center}
@@ -352,15 +355,19 @@ Hicimos el estudio para el mismo escenario que en los experimentos anteriores, u
 
 Para asegurarnos que la búsqueda llega a converger hemos establecido el número de iteraciones a $10^6$.
 
-La mayor dificultad para ajustarlos es que la única indicación que se tiene son los resultados obtenidos experimentalmente, eso obliga hacer pruebas exhaustivas para ver como se comporta el problema.
+\begin{hyp*}
+Con Simulated Annealing dará mejores resultados con el parámetro \emph{k} lo más grande posible y $\lambda$ lo más cercano a 0. Por otra parte \emph{stiter}\footnote{Iteraciones por cada cambio de temperatura} dará mejores resultados cuanto más grande sea pero no habrá mucha diferencia entre los distintos valores.
+\end{hyp*}
+
+La mayor dificultad para ajustar los parámetros es que la única indicación que se tiene son los resultados obtenidos experimentalmente, eso obliga hacer pruebas exhaustivas para ver como se comporta el problema.
 
 En nuestro caso probamos los siguientes valores:
 \begin{align*}
-stiter\footnote{Iteraciones por cada cambio de temperatura}&=\{100,\,1000,\,10000\},\\
+stiter&=\{100,\,1000,\,10000\},\\
 k&=\{10,\,100,\,1000,\,10000\},\\
-\lambda&=\{0.01;\,0.001;\,0.0001\}. %asi? perf
+\lambda&=\{0.01;\,0.001;\,0.0001\}.
 \end{align*}
-Para estos valores esperábamos obtener los mejores resultados con $stiter=10000$, $k=10000$ y $\lambda=0.0001$ aunque preveíamos no ver mucha diferencia entre los distintos valores de \emph{stiter}.
+Siguiendo la hipótesis inicial los parámetros esperados serían $stiter=10000$, $k=10000$ y $\lambda=0.0001$.
 
 Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:ex3_histSA}.
 
@@ -528,19 +535,51 @@ y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex4_s_mean_time.pdf}
-    \caption{Media Experimento 4 (Servidores)}%
+    \caption{Medias obtenidas en el experimento 4 (Servidores)}%
     \label{fig:ex4s_mean}
 \end{figure}
 
+En las figuras~\ref{fig:ex4s_mean} y \ref{fig:ex4s} se puede observar que el tiempo de ejecución tiende a disminuir
+al aumentar el número de servidores. No obstante, hay mucha variabilidad en el tiempo de ejecución, por lo que 
+los resultados no son completamente concluyentes.
+
 \begin{figure}[H]
     \centering
-    \includegraphics{include/plots/ex4_s_time_bplot_cut.pdf}
-    \caption{Experimento 4}%
+    \includegraphics{include/plots/ex4_s_time_bplot.pdf}
+    \caption{Boxplot resultados experimento 4 ($NSERV \leq 500$)}%
     \label{fig:ex4s}
 \end{figure}
 
-\subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Hill Climbing)}
-%TODO:
+\pagebreak
+
+\subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Hill Climbing)}%
+\label{sub:diffHC}
+
+El objetivo de este experimento es analizar las diferencias entre las dos heurísticas comparando
+tanto el tiempo total de transmisión como el tiempo de ejecución. Los parámetros usados son
+los mismos del experimento 1.
+Se ejecutaron 100 repeticiones usando la primera heurística y 100 más usando la segunda. Se
+Los parámetros y resultados obtenidos en el experimento se muestran en la tabla~\ref{tab:ex5}.
+
+\begin{table}[H]
+    \caption{Parámetros y resultados del experimento 5}%
+    \label{tab:ex5}
+    \begin{center}
+    \begin{tabular}{lr}
+    \toprule
+    Parámetro & valor \\
+    \midrule
+    USERS & 200 \\
+    NSERV & 50 \\
+    NREP & 5 \\
+    REQUESTS & 5\\
+    \bottomrule
+    \end{tabular}
+    \hspace{2em}
+    \input{include/tables/ex5}
+    \end{center}
+\end{table}
+%\vspace{-2em}
 
 \begin{figure}[H]
     \centering
@@ -549,30 +588,97 @@ y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s
     \label{fig:ex5ttt}
 \end{figure}
 
+En la figura~\ref{fig:ex5ttt} podemos ver los boxplots del tiempo de ejecución obtenido en el experimento 5.
+Podemos ver que el tiempo total de transmisión es menor con la segunda heurística y tiene menos variación.
+
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex5_time_bplot.pdf}
     \caption{Experimento 5: Tiempo de ejecución}%
-    \label{fig:ex5ttt}
+    \label{fig:ex5time}
 \end{figure}
 
+La figura~\ref{fig:ex5time} muestra los boxplots del tiempo de ejecución obtenidos en el experimento 5.
+En esta figura, se puede ver como el tiempo de ejecución es menor con la segunda heurística (Total en la
+figura) respecto a la primera (Max en la figura).
+También se puede apreciar como hay una variación de los tiempos de ejecución mucho mayor con la primera
+heurística que con la segunda.
+
+Los resultados de este experimento nos indican que la segunda heurística es más rápida y encuentra mejores
+resultados que la primera.
+
+\pagebreak
 \subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Simulated Annealing)}
 %TODO:
+
+Este experimento es análogo al anterior (\ref{sub:diffHC}) pero usando Simulated Annealing en vez de Hill Climbing.
+La tabla~\ref{tab:ex6} muestra los parámetros usados y los resultados obtenidos.
+
+\begin{table}[H]
+    \caption{Parámetros y resultados del experimento 6}%
+    \label{tab:ex6}
+    \begin{center}
+    \begin{tabular}{lr}
+    \toprule
+    Parámetro & valor \\
+    \midrule
+    USERS & 200 \\
+    NSERV & 50 \\
+    NREP & 5 \\
+    REQUESTS & 5\\
+    \bottomrule
+    \end{tabular}
+    \hspace{2em}
+    \input{include/tables/ex6}
+    \end{center}
+\end{table}
 
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex6_ttt_bplot.pdf}
     \caption{Experimento 6: Tiempo total de transmisión}%
-    \label{fig:ex5ttt}
+    \label{fig:ex6ttt}
 \end{figure}
+
+En la figura~\ref{fig:ex6ttt} podemos observar que, al igual que con Hill Climbing, con Simulated Annealing
+el tiempo total de transmisión es menor usando la segunda heurística.
 
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex6_time_bplot.pdf}
     \caption{Experimento 6: Tiempo de ejecución}%
-    \label{fig:ex5ttt}
+    \label{fig:ex6time}
 \end{figure}
 
+En la figura~\ref{fig:ex6time} podemos observar que, al contrario que con Hill Climbing, con Simulated Annealing
+el tiempo de ejecución es mayor usando la segunda heurística. También varia mucho mas el tiempo de ejecución
+con la segunda heurística.
+
+\subsubsection{Comparación con Hill Climbing}
+
+\vspace{-1.4em}
+\begin{table}[H]
+    \caption{Resultados del experimento 5 (Hill Climbing)}%
+    \label{tab:ex5_comp}
+    \vspace{-1.4em}
+    \begin{center}
+    \input{include/tables/ex5}
+    \end{center}
+    \caption{Resultados del experimento 6 (Simulated Annealing)}%
+    \label{tab:ex6_comp}
+    \vspace{-1.4em}
+    \begin{center}
+    \input{include/tables/ex6}
+    \end{center}
+\end{table}
+
+Si comparamos las tablas de los experimentos 5 y 6, podemos observar que Simulated Annealing
+obtiene resultados similares a Hill Climbing pero tarda bastante más. En los dos casos
+la heuristica que produce mejor TTT es la segunda.
+
+
+
+\pagebreak
 \subsection{Influencia del número de replicaciones de los ficheros}
 
 \begin{table}[H]
