@@ -228,6 +228,7 @@ de transmisión de cada servidor.
 Tal como se explica en la sección~\ref{sec:operadores_elegidos}, implementamos dos versiones de operadores,
 una que permitía acceder a todo el espacio de búsqueda y otra más restrictiva que evitaba repetir combinaciones
 de fichero servidor. Usamos los parametros que se muestran en la tabla~\ref{tab:ex1}:
+
 \begin{table}[H]
     \caption{Parametros y resultados del experimento 1}%
     \label{tab:ex1}
@@ -286,7 +287,7 @@ pueden afectar al tiempo de ejecución.
     \caption{$T_{ej}$, TTT y heurística obtenidos con los generadores de estado inicial}%
     \label{tab:ex2}
     \begin{center}
-    \input{include/tables/ex2}
+    \input{include/tables/ex2_n}
     \end{center}
 \end{table}
 
@@ -310,10 +311,11 @@ La mayor dificultad para ajustarlos es que la única indicación que se tiene so
 
 En nuestro caso probamos los valores de $stiter\footnote{Iteraciones por cada cambio de temperatura}=\{100,1000,10000\}$, $k=\{10,100,1000,10000\}$ y $\lambda=\{0.01,0.001,0.0001\}$. %como puedo hacer para que no sean todo ',' y se entienda más?.
 
-Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:histSA} %TODO: importar histograma.
+Para cada combinación de parámetros hemos realizado 10 ejecuciones del programa y hemos extraído la media del tiempo total de transmisión. Estos resultados se pueden comparar con claridad en la figura~\ref{fig:histSA}. %TODO: importar histograma.
 
-Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms.
+Como se puede observar en la gráfica los mejores resultados los hemos obtenido con $stiter=10000$, $k=10000$ y $\lambda=0.01$ con un tiempo total de transmisión medio de 488365.8 ms notablemente menor que el de Hill Climbing (559269 ms).
 
+Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. 
 
 \subsection{Evolución del tiempo de ejecución para valores crecientes de los parámetros}
 
@@ -327,10 +329,31 @@ el número mínimo de replicaciones de un fichero y el número de servidores.
 
 Por lo tanto, el número de estados crece más rápido al aumentar el número de usuarios que al aumentar
 el número de servidores. Además tener más servidores implica que es más fácil distribuir la carga de modo
-equitativo, por lo que es possible que se llegue más rápidamente a los minímos locales.
+equitativo, por lo que es posible que se llegue más rápidamente a los mínimos locales.
 
 \subsubsection{Número de usuarios que piden ficheros}
 
+\begin{table}[H]
+    \caption{Parametros experimento 4 (Usuarios)}%
+    \label{tab:ex4u_par}
+    \begin{center}
+    \begin{tabular}{lr}
+    \toprule
+    Parámetro & valor \\
+    \midrule
+    USERS & $100 \to 1000 \quad (+100)$ \\
+    NSERV & 50 \\
+    NREP & 5 \\
+    REQUESTS & 5\\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+\end{table}
+
+Realizamos los experimentos con los parámetros que se muestra en la tabla~\ref{tab:ex4u_par}. Incrementamos
+el número de usuarios dese 100 hasta 1000 en incrementos de 100. Se realizaron 100 repeticiones para
+cada valor de usuario, cada uno con una semilla distinta. Se midió el tiempo de ejecución y se calculó la media
+y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4u}:
 
 \begin{table}[H]
     \caption{Resultados del experimento 4 (Usuarios)}%
@@ -340,6 +363,7 @@ equitativo, por lo que es possible que se llegue más rápidamente a los minímo
     \end{center}
 \end{table}
 
+
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex4_u_mean_time.pdf}
@@ -347,10 +371,15 @@ equitativo, por lo que es possible que se llegue más rápidamente a los minímo
     \label{fig:ex4u_mean}
 \end{figure}
 
+A partir de estos resultados generamos una gráfica con las medias obtenidas para cada valor de usuarios (figura~\ref{fig:ex4u_mean}). Se puede apreciar un crecimiento que aparentemente parece cuadrático.
+
+En el boxplot que realizamos (figura~\ref{fig:ex4u}) podemos observar como el tiempo de ejecución
+varia mucho a medida que se van incrementando el número de usuarios.
+
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex4_u_time_bplot.pdf}
-    \caption{Experimento 4 (Usuarios)}%
+    \caption{Boxplot $T_{ej}$ del experimento 4 (Usuarios)}%
     \label{fig:ex4u}
 \end{figure}
 
