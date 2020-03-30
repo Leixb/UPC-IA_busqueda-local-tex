@@ -2,6 +2,7 @@
 \input{preamble.tex}
 
 \usepackage[bottom]{footmisc}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
 \usepackage{amsmath}
 \usepackage[justification=centering]{caption}
@@ -238,6 +239,10 @@ de transmisión de cada servidor.
 Tal como se explica en la sección~\ref{sec:operadores_elegidos}, implementamos dos versiones de operadores,
 una que permitía acceder a todo el espacio de búsqueda y otra más restrictiva que evitaba repetir combinaciones
 de fichero servidor.
+
+\begin{hyp*}
+
+\end{hyp*}
 
 La tabla~\ref{tab:ex1} muestra un resumen del experimento, con los valores que usamos y los resultados obtenidos.
 Decidimos incluir también el experimento 2 en ya que como se puede observar en la tabla la solución inicial
@@ -540,12 +545,33 @@ y la desviación estándar. Los resultados se muestran en la tabla~\ref{tab:ex4s
 \begin{figure}[H]
     \centering
     \includegraphics{include/plots/ex5_ttt_bplot.pdf}
+    \caption{Experimento 5: Tiempo total de transmisión}%
+    \label{fig:ex5ttt}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex5_time_bplot.pdf}
     \caption{Experimento 5: Tiempo de ejecución}%
-    \label{fig:ex4s}
+    \label{fig:ex5ttt}
 \end{figure}
 
 \subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Simulated Annealing)}
 %TODO:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex6_ttt_bplot.pdf}
+    \caption{Experimento 6: Tiempo total de transmisión}%
+    \label{fig:ex5ttt}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{include/plots/ex6_time_bplot.pdf}
+    \caption{Experimento 6: Tiempo de ejecución}%
+    \label{fig:ex5ttt}
+\end{figure}
 
 \subsection{Influencia del número de replicaciones de los ficheros}
 
@@ -685,6 +711,51 @@ la figura~\ref{fig:ex7comp}:
 
 \section{Conclusión}
 %TODO:
+
+
+\pagebreak
+\appendix
+\section{Trabajo de innovación}
+
+% METELO AQUI vale
+El tema  escogido es el escaneo inteligente con deep learning aplicado a la resonancia magnética, es decir de como se utiliza deep learning para hacer más preciso  y más rápido el escaneo de imágenes en la resonancia y magnética.
+
+La búsqueda de la información del trabajo la hemos repartido de la siguiente manera:
+
+\begin{itemize}
+		\item Se ha encargado \textbf{Moisés} de la búsqueda de información para \textbf{la descripción del producto o servicio.}
+		\item Se ha encargado \textbf{Moisés} de la búsqueda de información para \textbf{la descripción de las técnicas de IA que se han utilizado.\textbf{}}
+		\item  Se ha encargado \textbf{Aleix} de la búsqueda de información para \textbf{la descripción de cómo han sido utilizadas las técnicas.}
+		\item Se ha encargado \textbf{Aleix} de la búsqueda de información para la \textbf{explicación de porqué es un producto/servicio innovador y la naturaleza de la Innovación (innovación en la técnica/método de IA, uso innovador de técnicas ya existentes)}.
+		\item Se ha encargado \textbf{Alex} de la \textbf{búsqueda de información para el impacto del producto en la empresa (beneficios, riesgos, posición en el mercado) }
+		\item Se ha encargado \textbf{Alex} de la búsqueda de información \textbf{para el impacto del producto en el usuario o en la sociedad (beneficios y riesgos)}
+		\item Se encargan \textbf{todos} los integrantes del grupo en realizar la \textbf{bibliografía/Referencias utilizadas para la elaboración del documento.}
+\end{itemize}
+
+Pd: Ha medida que uno iba buscando información si uno encontraba información de otro tema que no era el suyo también la aportaba. También comentar que ha medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
+
+\subsection{Referencias relevantes:}
+
+\begin{itemize}
+
+\item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}   (Descripción del producto, innovación del producto técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en la empresa)
+\item \url{https://www.gehealthcare.com/article/magnetic-resonance-imaging-using-ai-a-new-deep-learning-tool}   (Descripción del producto, innovación del producto, técnicas de IA utilizadas, impacto en el usuario o la sociedad)
+\item \url{https://www.gehealthcare.com/article/how-advanced-applications-and-ai-are-impacting-mri}  (Técnicas de IA utilizadas, impacto en el usuario o la sociedad)
+\item \url{http://www.gesignapulse.com/signapulse/spring_2019/MobilePagedArticle.action?articleId=1488815&app=false#articleId1488815} (Técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en el usuario o en la empresa)
+\item \url{http://www.gesignapulse.com/signapulse/spring_2018/MobilePagedArticle.action?articleId=1396203&app=false#articleId1396203} (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+\item \url{https://www.auntminnie.com/index.aspx?sec=rca&sub=ecr_2019&pag=dis&ItemID=124750}  (técnicas IA utilizadas, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+\item \url{https://www.dotmed.com/news/story/46576}    (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+\item \url{http://www.gesignapulse.com/signapulse/autumn_2018/MobilePagedArticle.action?articleId=1444512&app=false#articleId1444512}  (Descripción del producto,innovación del producto,  técnicas de IA utilizadas)
+\item \url{https://medium.com/stanford-ai-for-healthcare/dont-just-scan-this-deep-learning-techniques-for-mri-52610e9b7a85}   (Descripción del producto, innovación del producto,  técnicas de IA utilizadas, como se han utilizado las técnicas)
+
+\end{itemize}
+
+El proceso de búsqueda de la información nos ha resultado tedioso, al tener que ir leyendo distintas páginas hasta dar con las páginas que pensamos que no van a resultar útiles.
+
+
+% los url se tienen que meter de un modo raro creo.
+% ahora te digo
+% van con \url{htpp.....}
     
     
 \end{document}
