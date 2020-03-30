@@ -422,9 +422,12 @@ Retomando lo explicado en la sección~\ref{ssec:variables}, el número de estado
 \texttt{REQUESTS*USERS*REPLICACIONES}, donde \texttt{REPLICACIONES} esta delimitado por
 el número mínimo de replicaciones de un fichero y el número de servidores.
 
-Por lo tanto, el número de estados crece más rápido al aumentar el número de usuarios que al aumentar
+%Por lo tanto,
+\begin{hyp*}
+El número de estados crece más rápido al aumentar el número de usuarios que al aumentar
 el número de servidores. Además tener más servidores implica que es más fácil distribuir la carga de modo
 equitativo, por lo que es posible que se llegue más rápidamente a los mínimos locales.
+\end{hyp*}
 
 \subsubsection{Número de usuarios que piden ficheros}
 
@@ -552,13 +555,18 @@ los resultados no son completamente concluyentes.
 
 \pagebreak
 
-\subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Hill Climbing)}%
+\subsection{Comparación de las dos heurísticas al calcular el Tiempo total de transmisión y tiempo para hallar la solución utilizando Hill Climbing}
 \label{sub:diffHC}
 
 El objetivo de este experimento es analizar las diferencias entre las dos heurísticas comparando
-tanto el tiempo total de transmisión como el tiempo de ejecución. Los parámetros usados son
-los mismos del experimento 1.
-Se ejecutaron 100 repeticiones usando la primera heurística y 100 más usando la segunda. Se
+tanto el tiempo total de transmisión como el tiempo de ejecución.
+
+\begin{hyp*}
+La segunda heurística será más rápida y encontrará mejores resultados que la primera.
+\end{hyp*} % no sé que más poner xD (yo lo dejaría así) además he puesto exactamente la misma en el de SA, al ser una hipotesis he supuesto que no pasaba nada, pero idk
+
+Los parámetros usados son los mismos del experimento 1.
+Se ejecutaron 100 repeticiones usando la primera heurística y 100 más usando la segunda.
 Los parámetros y resultados obtenidos en el experimento se muestran en la tabla~\ref{tab:ex5}.
 
 \begin{table}[H]
@@ -605,13 +613,18 @@ También se puede apreciar como hay una variación de los tiempos de ejecución 
 heurística que con la segunda.
 
 Los resultados de este experimento nos indican que la segunda heurística es más rápida y encuentra mejores
-resultados que la primera.
+resultados que la primera como esperábamos.
 
 \pagebreak
-\subsection{Diferencia entre Tiempo total de transmisión y tiempo para hallar la solución (Simulated Annealing)}
-%TODO:
+\subsection{Comparación de las dos heurísticas al calcular el Tiempo total de transmisión y tiempo para hallar la solución utilizando Simulated Annealing}%
+\label{sub:exp6}
 
 Este experimento es análogo al anterior (\ref{sub:diffHC}) pero usando Simulated Annealing en vez de Hill Climbing.
+
+\begin{hyp*}
+La segunda heurística será más rápida y encontrará mejores resultados que la primera .
+\end{hyp*}
+
 La tabla~\ref{tab:ex6} muestra los parámetros usados y los resultados obtenidos.
 
 \begin{table}[H]
@@ -635,7 +648,7 @@ La tabla~\ref{tab:ex6} muestra los parámetros usados y los resultados obtenidos
 
 \begin{figure}[H]
     \centering
-    \includegraphics{include/plots/ex6_ttt_bplot.pdf}
+    \includegraphics{include/plots/ex6fix_ttt_bplot.pdf}
     \caption{Experimento 6: Tiempo total de transmisión}%
     \label{fig:ex6ttt}
 \end{figure}
@@ -645,7 +658,7 @@ el tiempo total de transmisión es menor usando la segunda heurística.
 
 \begin{figure}[H]
     \centering
-    \includegraphics{include/plots/ex6_time_bplot.pdf}
+    \includegraphics{include/plots/ex6fix_time_bplot.pdf}
     \caption{Experimento 6: Tiempo de ejecución}%
     \label{fig:ex6time}
 \end{figure}
@@ -679,7 +692,8 @@ la heuristica que produce mejor TTT es la segunda.
 
 
 \pagebreak
-\subsection{Influencia del número de replicaciones de los ficheros}
+\subsection{Influencia del número de replicaciones de los ficheros}%
+\label{sub:exp7}
 
 \begin{table}[H]
     \caption{Parámetros experimento 7}%
@@ -799,9 +813,12 @@ tablas y gráficos correspondientes.
     \label{fig:ex7ttt_total}
 \end{figure}
 
-\subsubsection{Comparación entre las heurísticas}
+%\subsubsection{Comparación entre las heurísticas}
+\pagebreak
+\subsection{Comparación de las heurísticas}
 
-A nivel del tiempo de ejecución las dos heurística obtienen resultados similares, aunque la primera
+Como se ha podido ver en el experimento 7 (seción~\ref{sub:exp7}, 
+a nivel del tiempo de ejecución las dos heurística obtienen resultados similares, aunque la primera
 heurística tiene una desviación estándar mayor (los tiempos tienden a variar más).
 
 Donde si se aprecia una diferencia notable es en el tiempo total de transmisión. Los resultados
@@ -815,6 +832,40 @@ la figura~\ref{fig:ex7comp}:
     \label{fig:ex7comp}
 \end{figure}
 
+Los resultados de los experimentos 5 y 6 (secciones~\ref{sub:diffHC} y \ref{sub:exp6}) nos muestran que
+la segunda heurística da mejores resultados Usando tanto Hill Climbing como Simulated Annealing.
+
+% k hacemos?
+% no se me ocurre k poner la veradd
+% la conclusion la sacamos? XD
+% si yo lo quitarí. con lo de comparación de heuristicas ya vale como conclusión.
+% wait, en el 6 se usa SA
+% pero no he usado los parametros k dices creo
+% he dejado los por defecto lol
+% F
+% jaja bueno son 5 minutos rehacerlo
+% k parametros pongo?
+% NO WAY  pues esos, steps = 1000000, stiter = 10000, k = 10000 y lamb = 0.01
+
+% confimamos?  perf, pues le doy % Perf, me leo lo de Moisés
+%    STEPS=1000000
+%    STITER=10000
+%    K=10000
+%    LAMB=0.01
+
+% TODO (esto es lo del exeperimento 8),
+% k es basicamente la conclusion en verdad
+%  lo unico es k no se k poner tbh. pork en los otros puntos ya he puesto la comparacion
+% de las huerisicas 
+% supongo que es repetir un poco lo k ya se ha dicho y ya. Ni idea
+
+% pues si, no creo que tenga que ser muy extenso
+
+%    Dados los resultados obtenidos con todos estos experimentos, comparad las dos aproximaciones y
+% comentad las ventajas y desventajas de cada una. ¿Cual de las dos consideráis que es una mejor solución?
+% (comparar tamién los algoritmos)
+
+
 \section{Conclusión}
 %TODO:
 
@@ -824,7 +875,7 @@ la figura~\ref{fig:ex7comp}:
 \section{Trabajo de innovación}
 
 % METELO AQUI vale
-El tema  escogido es el escaneo inteligente con deep learning aplicado a la resonancia magnética, es decir de como se utiliza deep learning para hacer más preciso  y más rápido el escaneo de imágenes en la resonancia y magnética.
+El tema  escogido es el escaneo inteligente con deep learning aplicado a la resonancia magnética, es decir de como se utiliza deep learning para hacer más preciso y más rápido el escaneo de imágenes en la resonancia y magnética.
 
 La búsqueda de la información del trabajo la hemos repartido de la siguiente manera:
 
@@ -838,7 +889,7 @@ La búsqueda de la información del trabajo la hemos repartido de la siguiente m
 		\item Se encargan \textbf{todos} los integrantes del grupo en realizar la \textbf{bibliografía/Referencias utilizadas para la elaboración del documento.}
 \end{itemize}
 
-Pd: Ha medida que uno iba buscando información si uno encontraba información de otro tema que no era el suyo también la aportaba. También comentar que ha medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
+Pd: A medida que uno iba buscando información si uno encontraba información de otro tema que no era el suyo también la aportaba. También comentar que a medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
 
 \subsection{Referencias relevantes:}
 
@@ -856,9 +907,34 @@ Pd: Ha medida que uno iba buscando información si uno encontraba información d
 
 \end{itemize}
 
-El proceso de búsqueda de la información nos ha resultado tedioso, al tener que ir leyendo distintas páginas hasta dar con las páginas que pensamos que no van a resultar útiles.
+El proceso de búsqueda de la información nos ha resultado tedioso, al tener que ir leyendo distintas páginas hasta dar con las páginas que pensamos que nos van a resultar útiles.
 
 
+% Dificultades que hayáis encontrado a la hora de buscar la información necesaria para el trabajo
+% lol
+% creo k ha copiado el enunciado y ha escrito encima o algo
+% yo esa técnica la uso pero la disimulo un poco (o lo intento)
+
+% yo casi que hubiera hecho una tabla en plan:
+%           Aleix   Alex    Moisés
+% task1             x
+% task2     x
+% task2                     x
+% taskN     x       x       x
+
+% esque queda muy repetitivo el Se ha encargado X1 de Y1. Se ha encargado X1 de Y2...
+
+
+% NO PUEDE SER
+% Pd: Ha medida que uno iba buscando información si uno encontraba información de otro tema que no era el suyo también la aportaba. También comentar que ha medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
+%HA x2
+% en whats lo entiendo, pero en ordenador que tienes mil correctores buenos?? nose...
+
+% y esta última linea? si no la piden yo la quitaría pero me sabe mal por Moisés xD
+%JAJAJAJ tediosísimo. ya lol pone que NO van a ser útiles? jajaja
+% lmao no puede ser. La primera frase no consigo entenderla. Tiene el vicio de decir "es decir" y no aclarar nada, repite lo mismo con otrsa palabras o dice algo que lia más
+% T_T 
+% 
 % los url se tienen que meter de un modo raro creo.
 % ahora te digo
 % van con \url{htpp.....}
