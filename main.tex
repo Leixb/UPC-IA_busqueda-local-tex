@@ -324,7 +324,7 @@ lineal en $NREP$ (Número de replicaciones mínima de un fichero).
 
 \begin{hyp*}
 A pesar de que la segunda versión del generador de estado inicial es mucho más costoso, esta limitado
-por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV}$ $<0.5$), por lo que el coste es negligible
+por $NREP$ que es una constante y no muy grande ($\nicefrac{NREP}{NSERV}$ $<0.5$), por lo que el coste es despreciable
 y el tener un mejor estado inicial nos permite llegar a un máximo local más óptimo.
 \end{hyp*}
 
@@ -403,7 +403,7 @@ También cabe destacar que por lo general no hay mucha diferencias entre los dis
 
 Por otro lado también hemos estudiado la evolución de la heurística utilizada a lo largo del problema. Observando la gráfica~\ref{fig:ex3_heu_steps-10000-10000-0.01} y comparándola con la de Hill Climbing (figura~\ref{fig:ex3_heu_steps-HC} vimos que con los parámetros antes mencionados se obtenía un valor de \emph{heuM} mayor (18261 y  11758 respectivamente).
 
-Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7 ms y 11359 respectivamente. % heuM en que unidades está??
+Curiosamente con parámetros que daban peor tiempo total de transmisión que HC se obtuvo mejor valor de \emph{heuM} como en el caso de $stiter=10000$, $k=10$ y $\lambda=0.001$ (figura~\ref{fig:ex3_heu_steps-1000000-10000-10-0.001}) con un tiempo total de transmisión y \emph{heuM} iguales a 568187.7 ms y 11359 ms respectivamente.
 
 \begin{figure}[H]
     \centering
@@ -566,7 +566,7 @@ tanto el tiempo total de transmisión como el tiempo de ejecución.
 
 \begin{hyp*}
 La segunda heurística será más rápida y encontrará mejores resultados que la primera.
-\end{hyp*} % no sé que más poner xD (yo lo dejaría así) además he puesto exactamente la misma en el de SA, al ser una hipotesis he supuesto que no pasaba nada, pero idk
+\end{hyp*} % no sé que más poner xD (yo lo dejaría así) además he puesto exactamente la misma en el de SA, al ser una hipótesis he supuesto que no pasaba nada, pero idk
 
 Los parámetros usados son los mismos del experimento 1.
 Se ejecutaron 100 repeticiones usando la primera heurística y 100 más usando la segunda.
@@ -690,7 +690,7 @@ con la segunda heurística.
 
 Si comparamos las tablas de los experimentos 5 y 6, podemos observar que Simulated Annealing
 obtiene resultados similares a Hill Climbing pero tarda bastante más. En los dos casos
-la heuristica que produce mejor TTT es la segunda.
+la heurística que produce mejor TTT es la segunda.
 
 
 
@@ -838,49 +838,28 @@ la figura~\ref{fig:ex7comp}:
 Los resultados de los experimentos 5 y 6 (secciones~\ref{sub:diffHC} y \ref{sub:exp6}) nos muestran que
 la segunda heurística da mejores resultados Usando tanto Hill Climbing como Simulated Annealing.
 
-% k hacemos?
-% no se me ocurre k poner la veradd
-% la conclusion la sacamos? XD
-% si yo lo quitarí. con lo de comparación de heuristicas ya vale como conclusión.
-% wait, en el 6 se usa SA
-% pero no he usado los parametros k dices creo
-% he dejado los por defecto lol
-% F
-% jaja bueno son 5 minutos rehacerlo
-% k parametros pongo?
-% NO WAY  pues esos, steps = 1000000, stiter = 10000, k = 10000 y lamb = 0.01
-
-% confimamos?  perf, pues le doy % Perf, me leo lo de Moisés
-%    STEPS=1000000
-%    STITER=10000
-%    K=10000
-%    LAMB=0.01
-
-% TODO (esto es lo del exeperimento 8),
-% k es basicamente la conclusion en verdad
-%  lo unico es k no se k poner tbh. pork en los otros puntos ya he puesto la comparacion
-% de las huerisicas 
-% supongo que es repetir un poco lo k ya se ha dicho y ya. Ni idea
-
-% pues si, no creo que tenga que ser muy extenso
-
 %    Dados los resultados obtenidos con todos estos experimentos, comparad las dos aproximaciones y
 % comentad las ventajas y desventajas de cada una. ¿Cual de las dos consideráis que es una mejor solución?
 % (comparar tamién los algoritmos)
 
 
-%\section{Conclusión}
-%TODO:
+\section{Conclusión}
 
+Los resultados de los experimentos 5 y 6 (secciones~\ref{sub:diffHC} y \ref{sub:exp6}) que comparan
+las distintas heurísticas con Hill Climbing y Simulated Annealing nos indican que con la segunda
+heurística se obtiene un mejor resultado usando Simulated Annealing, pero con la primera se obtiene
+uno mejor con Hill Climbing. Esto no concuerda con lo que esperábamos inicialmente: que
+el Simulated Annealing obtuviera resultados significativamente mejores que Hill Climbing con ambas heurísticas.
 
 \pagebreak
 \appendix
 \section{Trabajo de innovación}
 
-% METELO AQUI vale % no sé si cambiarlo todo transcribiendo sus palabras
-El tema sobre el que trabajaremos es el escaneo inteligente con deep learning aplicado a la resonancia magnética. En este ámbito la inteligencia artificial se utiliza para hacer el escaneo de imágenes más preciso y rápido.
-% Comento todo lo de moisés, no lo borro.
-%El tema  escogido es el escaneo inteligente con deep learning aplicado a la resonancia magnética, es decir de como se utiliza deep learning para hacer más preciso y más rápido el escaneo de imágenes en la resonancia y magnética.
+El tema sobre el que trabajaremos es el escaneo inteligente con deep learning aplicado a la resonancia magnética. 
+En este ámbito la inteligencia artificial se utiliza para hacer el escaneo de imágenes más preciso y rápido. 
+En concreto nos centraremos en el producto AIRx™ de general electric healthcare.
+
+
 
 La búsqueda de la información del trabajo la hemos repartido de la siguiente manera:
 \begin{itemize}
@@ -903,97 +882,63 @@ La búsqueda de la información del trabajo la hemos repartido de la siguiente m
     \begin{itemize}
 \item Recopilación de la bibliografía y referencias utilizadas para la elaboración del documento.
     \end{itemize}
-    
 \end{itemize}
 
-
-%\begin{itemize} wait un segundo k lo hago con vim
-%		\item Descripción del producto o servicio: Moisés.
-%		\item Descripción de las técnicas de IA que se han utilizado: Moisés.
-%		\item  Se ha encargado \textbf{Aleix} de la búsqueda de información para \textbf{la descripción de cómo han sido utilizadas las técnicas.}
-%		\item Se ha encargado \textbf{Aleix} de la búsqueda de información para la \textbf{explicación de porqué es un producto/servicio innovador y la naturaleza de la Innovación (innovación en la técnica/método de IA, uso innovador de técnicas ya existentes)}.
-%		\item Se ha encargado \textbf{Alex} de la \textbf{búsqueda de información para el impacto del producto en la empresa (beneficios, riesgos, posición en el mercado) }
-%		\item Se ha encargado \textbf{Alex} de la búsqueda de información \textbf{para el impacto del producto en el usuario o en la sociedad (beneficios y riesgos)}
-%		\item Se encargan \textbf{todos} los integrantes del grupo en realizar la \textbf{bibliografía/Referencias utilizadas para la elaboración del documento.}
-%\end{itemize}
-%
-%\begin{itemize}
-%		\item Se ha encargado \textbf{Moisés} de la búsqueda de información para \textbf{la descripción del producto o servicio.}
-%		\item Se ha encargado \textbf{Moisés} de la búsqueda de información para \textbf{la descripción de las técnicas de IA que se han utilizado.\textbf{}}
-%		\item  Se ha encargado \textbf{Aleix} de la búsqueda de información para \textbf{la descripción de cómo han sido utilizadas las técnicas.}
-%		\item Se ha encargado \textbf{Aleix} de la búsqueda de información para la \textbf{explicación de porqué es un producto/servicio innovador y la naturaleza de la Innovación (innovación en la técnica/método de IA, uso innovador de técnicas ya existentes)}.
-%		\item Se ha encargado \textbf{Alex} de la \textbf{búsqueda de información para el impacto del producto en la empresa (beneficios, riesgos, posición en el mercado) }
-%		\item Se ha encargado \textbf{Alex} de la búsqueda de información \textbf{para el impacto del producto en el usuario o en la sociedad (beneficios y riesgos)}
-%		\item Se encargan \textbf{todos} los integrantes del grupo en realizar la \textbf{bibliografía/Referencias utilizadas para la elaboración del documento.}
-%\end{itemize}
-
-
-% bueno podemos dejar esto maybe
-% sin el PD igual tiene un pase.
-% pork sino no queda nada de moises.
-%
-% ya ves esque se lo hemos quitado todo lol jajaja pero esque esta muy raro estructurada la frase.
-% definitivamente no
-% sudamos de la conclusión, no? seh... jajaja a ver me miro lo que has pues en comparativa pero tiene pinta que con eso ya vale. OK
-% si puedes mete un poco mas en lo de la comparativa pork tampoc me la he currado mucho la verdad.
-% es muy cutre.
-
-%Además de forma complementaria íbamos compartiendo toda información que nos pareciese útil para los demás apartados.
-% lloremos
-Además, a medida que uno iba buscando información si encontraba información de otro tema que no era el suyo también la aportaba. 
-También comentar que a medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
-% asi ok?sigue fluyendo muy rara la frase pero bueno. suda mucho dejalo asi
-% ME ESTÁ MATANDO CADA VEZ QUE LA LEO quizás no me aguanto y borro un "informacion" que hay 3 en tres lineas (3/3).
-% esk se repite muchisimo. 
-% voy a mirarme la paginacion okay
 \subsection{Referencias relevantes:}
 
+%\begin{itemize}
+%
+%\item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}   (Descripción del producto, innovación del producto técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en la empresa)
+%\item \url{https://www.gehealthcare.com/article/magnetic-resonance-imaging-using-ai-a-new-deep-learning-tool}   (Descripción del producto, innovación del producto, técnicas de IA utilizadas, impacto en el usuario o la sociedad)
+%\item \url{https://www.gehealthcare.com/article/how-advanced-applications-and-ai-are-impacting-mri}  (Técnicas de IA utilizadas, impacto en el usuario o la sociedad)
+%\item \url{http://www.gesignapulse.com/signapulse/spring_2019/MobilePagedArticle.action?articleId=1488815&app=false#articleId1488815} (Técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en el usuario o en la empresa)
+%\item \url{http://www.gesignapulse.com/signapulse/spring_2018/MobilePagedArticle.action?articleId=1396203&app=false#articleId1396203} (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+%\item \url{https://www.auntminnie.com/index.aspx?sec=rca&sub=ecr_2019&pag=dis&ItemID=124750}  (técnicas IA utilizadas, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+%\item \url{https://www.dotmed.com/news/story/46576}    (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
+%\item \url{http://www.gesignapulse.com/signapulse/autumn_2018/MobilePagedArticle.action?articleId=1444512&app=false#articleId1444512}  (Descripción del producto,innovación del producto,  técnicas de IA utilizadas)
+%\item \url{https://medium.com/stanford-ai-for-healthcare/dont-just-scan-this-deep-learning-techniques-for-mri-52610e9b7a85}   (Descripción del producto, innovación del producto,  técnicas de IA utilizadas, como se han utilizado las técnicas)
+%\item \url{https://www.intel.ai/solutions/gehc-airx/}: Descripción de las diferentes CNNs que se usan.
+%
+%\end{itemize}
+
 \begin{itemize}
-
-\item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}   (Descripción del producto, innovación del producto técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en la empresa)
-\item \url{https://www.gehealthcare.com/article/magnetic-resonance-imaging-using-ai-a-new-deep-learning-tool}   (Descripción del producto, innovación del producto, técnicas de IA utilizadas, impacto en el usuario o la sociedad)
-\item \url{https://www.gehealthcare.com/article/how-advanced-applications-and-ai-are-impacting-mri}  (Técnicas de IA utilizadas, impacto en el usuario o la sociedad)
-\item \url{http://www.gesignapulse.com/signapulse/spring_2019/MobilePagedArticle.action?articleId=1488815&app=false#articleId1488815} (Técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en el usuario o en la empresa)
-\item \url{http://www.gesignapulse.com/signapulse/spring_2018/MobilePagedArticle.action?articleId=1396203&app=false#articleId1396203} (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-\item \url{https://www.auntminnie.com/index.aspx?sec=rca&sub=ecr_2019&pag=dis&ItemID=124750}  (técnicas IA utilizadas, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-\item \url{https://www.dotmed.com/news/story/46576}    (Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa)
-\item \url{http://www.gesignapulse.com/signapulse/autumn_2018/MobilePagedArticle.action?articleId=1444512&app=false#articleId1444512}  (Descripción del producto,innovación del producto,  técnicas de IA utilizadas)
-\item \url{https://medium.com/stanford-ai-for-healthcare/dont-just-scan-this-deep-learning-techniques-for-mri-52610e9b7a85}   (Descripción del producto, innovación del producto,  técnicas de IA utilizadas, como se han utilizado las técnicas)
-\item \url{https://www.intel.ai/solutions/gehc-airx/}: Descripción de las diferentes CNNs que se usan.
-
+\item \url{https://blog.tensorflow.org/2019/03/intelligent-scanning-using-deep-learning.html?m=1}:
+(Cons. 11/03)
+Descripción del producto, innovación del producto técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en la empresa
+\item \url{https://www.gehealthcare.com/article/magnetic-resonance-imaging-using-ai-a-new-deep-learning-tool}:
+(Cons. 11/03)
+Descripción del producto, innovación del producto, técnicas de IA utilizadas, impacto en el usuario o la sociedad
+\item \url{https://www.gehealthcare.com/article/how-advanced-applications-and-ai-are-impacting-mri}:
+(Cons. 11/03)
+Técnicas de IA utilizadas, impacto en el usuario o la sociedad
+\item \url{http://www.gesignapulse.com/signapulse/spring_2019/MobilePagedArticle.action?articleId=1488815&app=false#articleId1488815}:
+(Cons. 14/03)
+Técnicas de IA utilizadas, como se han utilizado las técnicas, impacto en el usuario o en la empresa
+\item \url{http://www.gesignapulse.com/signapulse/spring_2018/MobilePagedArticle.action?articleId=1396203&app=false#articleId1396203}:
+(Cons. 15/03)
+Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa
+\item \url{https://www.auntminnie.com/index.aspx?sec=rca&sub=ecr_2019&pag=dis&ItemID=124750}:
+(Cons. 14/03)
+técnicas IA utilizadas, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa
+\item \url{https://www.dotmed.com/news/story/46576}:
+(Cons. 14/03)
+Descripción del producto, innovación del producto, impacto del producto en el usuario o en la sociedad, impacto del producto en la empresa
+\item \url{http://www.gesignapulse.com/signapulse/autumn_2018/MobilePagedArticle.action?articleId=1444512&app=false#articleId1444512}:
+(Cons. 14/03)
+Descripción del producto,innovación del producto,  técnicas de IA utilizadas
+\item \url{https://medium.com/stanford-ai-for-healthcare/dont-just-scan-this-deep-learning-techniques-for-mri-52610e9b7a85}:
+(Cons. 16/03)
+Descripción del producto, innovación del producto,  técnicas de IA utilizadas, como se han utilizado las técnicas
+\item \url{https://www.intel.ai/solutions/gehc-airx/}:
+(Cons. 22/03)
+Descripción de las diferentes CNNs que se usan.
 \end{itemize}
 
-El proceso de búsqueda de la información nos ha resultado tedioso, al tener que ir leyendo distintas páginas hasta dar con las páginas que pensamos que nos van a resultar útiles.
+La principal dificultad que hemos encontrado al buscar información ha sido que no dominamos la terminología
+de los escáneres MRI ni su funcionamiento, por lo que a parte de buscar información sobre el producto y la
+tecnología nos hemos tenido que informar también sobre todo el proceso detrás de una sesión de MRI y sus
+complejidades.
 
-
-% Dificultades que hayáis encontrado a la hora de buscar la información necesaria para el trabajo
-% lol
-% creo k ha copiado el enunciado y ha escrito encima o algo
-% yo esa técnica la uso pero la disimulo un poco (o lo intento)
-
-% yo casi que hubiera hecho una tabla en plan:
-%           Aleix   Alex    Moisés
-% task1             x
-% task2     x
-% task2                     x
-% taskN     x       x       x
-
-% esque queda muy repetitivo el Se ha encargado X1 de Y1. Se ha encargado X1 de Y2...
-
-
-% NO PUEDE SER
-% Pd: Ha medida que uno iba buscando información si uno encontraba información de otro tema que no era el suyo también la aportaba. También comentar que ha medida que vayamos avanzando el trabajo iremos buscando más información si con esta no es suficiente.
-%HA x2
-% en whats lo entiendo, pero en ordenador que tienes mil correctores buenos?? nose...
-
-% y esta última linea? si no la piden yo la quitaría pero me sabe mal por Moisés xD
-%JAJAJAJ tediosísimo. ya lol pone que NO van a ser útiles? jajaja
-% lmao no puede ser. La primera frase no consigo entenderla. Tiene el vicio de decir "es decir" y no aclarar nada, repite lo mismo con otrsa palabras o dice algo que lia más
-% T_T 
-% 
-% los url se tienen que meter de un modo raro creo.
-% ahora te digo
-% van con \url{htpp.....}
-    
+% Dificultades que hayáis encontrado a la hora de buscar la información necesaria para el trabajo.
     
 \end{document}
